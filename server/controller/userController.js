@@ -1,7 +1,7 @@
 const userSchema = require("../models/user");
 const notificationSchema = require("../models/notification");
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const path = require("path");
 
 const Add_InsertUser = async (req, res) => {
@@ -13,7 +13,7 @@ const Add_InsertUser = async (req, res) => {
             return res.status(200).json("existe")
         }
         
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcryptjs.hash(password, 10);
 
         const newUser = new userSchema({
             username: username,
@@ -44,7 +44,7 @@ const checkUser = async (req, res) => {
             return res.json("nonexiste");
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcryptjs.compare(password, user.password);
         if (!isPasswordValid) {
             return res.json("Incorrect password");
         }
