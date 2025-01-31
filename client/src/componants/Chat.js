@@ -85,6 +85,8 @@ export default function Chat({socket}){
                         to: showUser.user?._id,
                         withCredentials: true 
                     });
+                    console.log(response);
+                    
                     setMessages(response.data);
                 }
             } catch (err) {
@@ -150,13 +152,9 @@ export default function Chat({socket}){
                                 {messages.map((msg)=>(
                                     <div className={msg.fromSelf ? "reciever" : "sender"} ref={scrollRef}>
                                         {/* <img src={`http://localhost:8000/${showUser.user?.profileImg}`}/> */}
-                                        {console.log(msg)}
-                                        {msg.description.format ==="link" ?(<Link to={`/post/${msg.description.postId}`}><div>
-                                            {msg.message}
-                                            <img src={`http://localhost:8000/${msg.image}`}/>
-                                            
-                                            
-                                            </div></Link>):(<div>{msg.message}</div>)}
+                                        
+                                        
+                                        <div>{msg.message}</div>
                                         
                                     </div>
                                 ))}

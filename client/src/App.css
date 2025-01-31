@@ -1388,6 +1388,7 @@ position: relative;
     
     padding: 12px 25px;
     max-width: 70%;
+    align-self: end;
     position: relative;
     border-radius: 5px;
     overflow-wrap: break-word;
@@ -1397,10 +1398,12 @@ position: relative;
 
 .discussion div{
     margin: 6px 0;
-    /* float: revert-layer; */
+    
 }
 .discussion{
     padding: 0px 0px 54px 70px;
+    display: flex;
+    flex-direction: column;
 }
 .discussion img{
     height: 350px;
@@ -1416,16 +1419,12 @@ position: relative;
     margin-left: 0;
 }
 .reciever{
-    display: inline-flex;
-    justify-content: right;
-    direction: rtl;
-    width: 100%;
-    /* float: right; */
-    
+   align-self: start;
+   max-width: 70%;
+
 }
 .reciever div {
     padding: 12px 25px;
-    max-width: 70%;
     overflow-wrap: break-word;
     border-radius: 5px;
     color: white;

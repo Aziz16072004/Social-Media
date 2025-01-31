@@ -1,23 +1,59 @@
 const Post = require("../models/post");
 const User = require("../models/user");
+const bucket = require('../config/firebaseConfig'); // Import the Firebase bucket
 
 const uploadPost = async (req, res) => {
     try {
-        const newPost = new Post({
-            name: req.body.name,
-            image: `uploads/${req.file.filename}`,
-            userId: req.body.userId,
+        const file = req.file; // Ensure file is being populated correctly
+        if (!file) {
+            return res.status(400).send({ success: false, message: 'No file uploaded.' });
+        }
+
+        // Generate a unique filename
+        const timestamp = Date.now();
+        const fileName = `uploads/${timestamp}-${file.originalname}`; 
+        const blob = bucket.file(fileName);
+
+        const blobStream = blob.createWriteStream({
+            metadata: {
+                contentType: file.mimetype,
+            },
         });
-        await newPost.save()
-        await newPost.populate({
-            path: 'userId',
-            model: 'User'
+
+        blobStream.on('error', (err) => {
+            console.error('Error during upload:', err); // Log error for debugging
+            return res.status(500).send({ success: false, message: err.message });
         });
-        res.status(201).send(newPost);
+
+        blobStream.on('finish', async () => {
+            // Use the appropriate URL for your Firebase setup
+            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileName)}?alt=media`;
+
+            const newPost = new Post({
+                name: req.body.name,
+                image: publicUrl,
+                userId: req.body.userId,
+            });
+
+            try {
+                const savedPost = await newPost.save();
+                await savedPost.populate({
+                    path: 'userId',
+                    model: 'User'
+                });
+                res.status(201).send({ success: true, data: savedPost });
+            } catch (saveError) {
+                console.error('Error saving post:', saveError);
+                res.status(500).send({ success: false, message: saveError.message });
+            }
+        });
+
+        blobStream.end(file.buffer);
     } catch (error) {
-        res.status(500).send(error.message);
+        console.error('Error uploading post:', error); // Log the complete error object
+        res.status(500).send({ success: false, message: error.message });
     }
-}
+};
 const showPost = async (req,res) =>{
     postId = req.query.postId
     try {

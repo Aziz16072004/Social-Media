@@ -136,7 +136,7 @@ function App() {
               </div> 
           </div>
                     ):null}
-    <Router basename="/Social_Media_Project">
+    <Router basename="/">
       <Routes>
         <Route path="/" exact element={<Login />} />
         <Route path="/signup" exact element={<SignUp />} />

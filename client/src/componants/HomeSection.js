@@ -295,13 +295,13 @@ export default function HomeSection({theme}) {
                         </div>
                         <div className="post-description ">{post.name}</div>
                         <div className="postes-images-post">
-                            <img src={`http://localhost:8000/${post.image}`} alt=""/>
+                            <img src={post.image} alt=""/>
                         </div>
                         <div className="icons-posts">
                             <div className="icons-posts-left">
                             <img
                               alt=""
-                              src={post.peopleRated.some(rate => rate.user?._id === data?._id) ? loveColored : (theme === "blackMode" || theme === "darkMode" ? whiteLove : blackLove)}
+                              src={post?.peopleRated?.some(rate => rate.user?._id === data?._id) ? loveColored : (theme === "blackMode" || theme === "darkMode" ? whiteLove : blackLove)}
                               onClick={async ()=>{hundleClickLike(post)}}/>
                               <ion-icon name="chatbubble-ellipses-outline" onClick={()=>{fetchData(post._id) ; setShowPostInformation(true) ; setShowComments(true)}}></ion-icon>
                   
@@ -325,11 +325,11 @@ export default function HomeSection({theme}) {
                             <div className="vue">
                                 <div className="line1-vue">
                                   <div>
-                                  {post.peopleRated.map((rater, index) => (
+                                  {post?.peopleRated?.map((rater, index) => (
   index < 3 ? <img src={`http://localhost:8000/${rater.user?.profileImg}`} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
 ))}
               </div>
-                                    <p onClick={()=>{fetchData(post._id) ;setShowRatings(true)}}>Like by <b>{post.peopleRated.length > 0 ? post.peopleRated[0].user?.username : ""}</b> and <b>{post.rates > 0 ? post.rates - 1 : 0} other</b></p>
+                                    <p onClick={()=>{fetchData(post._id) ;setShowRatings(true)}}>Like by <b>{post?.peopleRated?.length > 0 ? post?.peopleRated[0]?.user?.username : ""}</b> and <b>{post?.rates > 0 ? post?.rates - 1 : 0} other</b></p>
 </div>
 
 
@@ -392,14 +392,14 @@ export default function HomeSection({theme}) {
               setShowPostInformation(true)
               setShowComments(true)}
               
-              }>Vue all {post.comments.length} comments</small>
-              {post.comments.length>0 ?
+              }>Vue all {post?.comments?.length} comments</small>
+              {post?.comments?.length>0 ?
                 <div className="comment">
                   
-                  <img src={`http://localhost:8000/${post.comments[0].user?.profileImg}`} alt=""/>
+                  <img src={`http://localhost:8000/${post?.comments[0]?.user?.profileImg}`} alt=""/>
                   <div className="comment_description">
-                    <p className="comment_title"><b>{post.comments[0].user?.username}</b></p>
-                    <p className="comment_writing"> {post.comments[0].comment}</p>
+                    <p className="comment_title"><b>{post?.comments[0]?.user?.username}</b></p>
+                    <p className="comment_writing"> {post?.comments[0]?.comment}</p>
                   </div>
                 </div>
             :null}
