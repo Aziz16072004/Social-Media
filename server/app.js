@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require("cors")
-const http = require('http')
+const http = require('http');
+require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const app = express();
 const {Server} = require("socket.io");
@@ -33,6 +34,7 @@ app.use("/message" , require("./routes/messageRoute"))
 
 // --------------------------deployment------------------------------
 const __dirname1 = path.resolve();
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname1, "/client/build")));
 
@@ -45,12 +47,13 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+
 // --------------------------deployment------------------------------
 
 mongoose.set("strictQuery" , false);
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/data");
+        const conn = await mongoose.connect(process.env.MONGO_URI);
         console.log(`MongoDB Connected: ${conn.connection.host} `);
     } catch (error) {
         console.log(error);
