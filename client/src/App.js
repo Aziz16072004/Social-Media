@@ -41,7 +41,7 @@ function App() {
   ]
   const colors = ["mainColor","yellow","red","green","aqua"]
   useEffect(() => {
-    const newSocket = io("http://localhost:8000");
+    const newSocket = io("https://social-media-2-o8uj.onrender.com");
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();

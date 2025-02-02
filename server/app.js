@@ -70,7 +70,8 @@ const io = new Server(server, {
     }
 });
 server.listen(PORT, () => {
-    console.log("listening for requests");
+    console.log(`Server is running at ${process.env.URL || `http://localhost:${PORT}`}`);
+
 })
 function formatPostDate(createdAt) {
     const postDate = new Date(createdAt);
