@@ -2,7 +2,7 @@ import "./Setting.css"
 import 'bootstrap/dist/css/bootstrap.css'
 import React, { useRef } from 'react';
     
-import axios from "axios"
+import axios from "../../axios"
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 export default function Setting(){
@@ -35,7 +35,7 @@ export default function Setting(){
   useEffect(() => {
     const getUserInformations = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/user/getUser/${id}`);
+        const res = await axios.get(`/user/getUser/${id}`);
         setUserData(res.data);
         setUsername(res.data.username);
       } catch (error) {
@@ -64,7 +64,7 @@ export default function Setting(){
     setErrorMessage("")
     formData.append('newPassword', newPassword);
     try {
-      const res = await axios.patch(`http://localhost:8000/user/updateUser/${id}`, formData);
+      const res = await axios.patch(`/user/updateUser/${id}`, formData);
       if(res.data){
         setValidation("saving data successfully")
       }
@@ -89,7 +89,7 @@ export default function Setting(){
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
-  <img className="profilepic__image" src={showProfileImg !== "" ?showProfileImg :`http://localhost:8000/${userData.profileImg}`} width="150" height="150" alt="Profibild" />
+  <img className="profilepic__image" src={showProfileImg !== "" ?showProfileImg :`/${userData.profileImg}`} width="150" height="150" alt="Profibild" />
   <div className="profilepic__content">
   <ion-icon name="camera-outline"></ion-icon>
 

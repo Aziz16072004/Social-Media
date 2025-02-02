@@ -1,6 +1,6 @@
 // In StoriesCreate.js
 import React, { useEffect, useRef, useState } from 'react';
-import axios from "axios"
+import axios from "../axios"
 import { Link, useParams } from 'react-router-dom';
 const StoriesCreate = () => {
 
@@ -29,7 +29,7 @@ const StoriesCreate = () => {
     useEffect(()=>{
         const fetchStories = async ()=>{
             try {
-                const res = await axios.get(`http://localhost:8000/story/getStories?userId=${id}`)
+                const res = await axios.get(`/story/getStories?userId=${id}`)
                 setStories(res.data);
             } catch (error) {
                 console.log(error);
@@ -54,7 +54,7 @@ const StoriesCreate = () => {
         formData.append('image', storyImage);
         console.log(formData);
         try {
-            const res = await axios.post("http://localhost:8000/story/addStory" , formData,{withCredentials: true })
+            const res = await axios.post("/story/addStory" , formData,{withCredentials: true })
             setStories(prevStories => [res.data , ...prevStories]);
         } catch (error) {
             console.log(error);
@@ -80,7 +80,7 @@ const StoriesCreate = () => {
                     <div className="profile-bar" key={story._id}>
                     <div className="profile-bar-content"  >
                         <div className="profile-img">
-                            <img src={`http://localhost:8000/${story.image}`}alt=""/>
+                            <img src={`/${story.image}`}alt=""/>
                         </div>
                         <div className="info">
                             <b id="name-of-profile">aziz</b> <br/>

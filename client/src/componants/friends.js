@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react"
-import axios from "axios"
+import axios from "../axios"
 import {Link} from "react-router-dom"
 export default function Friends({socket , users}){
     const [friends , setFriends] = useState([])
@@ -34,7 +34,7 @@ export default function Friends({socket , users}){
                     createdAt : Date.now()
                 });
                 }
-            const res = await axios.post("http://localhost:8000/user/acceptfriend", {recipient : userData._id, sender :  req.user?._id,withCredentials: true })
+            const res = await axios.post("/user/acceptfriend", {recipient : userData._id, sender :  req.user?._id,withCredentials: true })
             setFriends((prevFriends) => (Array.isArray(prevFriends) ? [...prevFriends, {user :res.data}] : [{user : res.data}]));
             setRequests(prevRequests => prevRequests.filter(request => request.user?._id !== req.user?._id))
         } catch (error) {
@@ -53,7 +53,7 @@ export default function Friends({socket , users}){
                     createdAt : Date.now()
                 });
                 }
-            await axios.delete("http://localhost:8000/user/rejectfriend", {
+            await axios.delete("/user/rejectfriend", {
                 data: { recipient: userData._id, sender: req.user?._id },withCredentials: true 
               })
             setRequests(prevRequests => prevRequests.filter(request => request.user?._id !== req.user?._id))
@@ -65,7 +65,7 @@ export default function Friends({socket , users}){
     useEffect(()=>{
         const fetchData = async() =>{
             try {
-                const res = await axios.get(`http://localhost:8000/user/getuser/${userData._id}`,{withCredentials: true })
+                const res = await axios.get(`/user/getuser/${userData._id}`,{withCredentials: true })
                 setFriends(res.data.friends)
                 setSearchUsers(res.data.friends)
                 
@@ -75,7 +75,7 @@ export default function Friends({socket , users}){
                 res.data.friends.map(async (friend) => {
                     try {
                     const lastMsgResponse = await axios.get(
-                        `http://localhost:8000/message/getLastMsg/?from=${userData._id}&to=${friend.user?._id}`,{withCredentials: true }
+                        `/message/getLastMsg/?from=${userData._id}&to=${friend.user?._id}`,{withCredentials: true }
                     );
                     const lastMessage = lastMsgResponse.data;
                     newLastMessages[friend.user?._id] = lastMessage;
@@ -118,7 +118,7 @@ setLastMessages(newLastMessages);
                     <Link to={`/chat/${userData._id}/${friend.user?._id}`}   className="message-person ">
                         
                         <div className="profile-img-friends ">
-                            <img src={`http://localhost:8000/${friend.user?.profileImg}`} alt=""/>
+                            <img src={`/${friend.user?.profileImg}`} alt=""/>
                             {users.some(user => user?.userId ===friend.user?._id) ?(
 
                                 <span className="activePerson"></span>
@@ -142,7 +142,7 @@ setLastMessages(newLastMessages);
                 <div className="requests" key={req.user?._id}>
                     <div className="requests-person ">
                         <div className="profile-img">
-                            <img src={`http://localhost:8000/${req.user?.profileImg}`} alt=""/>
+                            <img src={`/${req.user?.profileImg}`} alt=""/>
                         </div>
                         <div className="requests-info"> 
                             <b>{req.user?.username}</b> <br/> <small> 8 mutal friends</small>

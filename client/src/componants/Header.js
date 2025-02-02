@@ -1,5 +1,5 @@
 import searcheImg  from "../imgs/search-interface-symbol.png"
-import axios from "axios"
+import axios from "../axios"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom';
@@ -25,7 +25,7 @@ export default function Header({theme , color}){
         const fetchData=async()=>{
             
             try {
-                const res = await axios.get("http://localhost:8000/home/getAllUsers",{
+                const res = await axios.get("/home/getAllUsers",{
                     withCredentials: true,
                 });
                 setUsers(res.data)
@@ -67,7 +67,7 @@ return(
                        const isFriend = user?.friends.find((friend) => friend.user === dataStoraged._id )
                        return(
                            <div  className="serachePerson container align-items-center" key={user?._id}>
-                        <img src={`http://localhost:8000/${user?.profileImg}`} alt="" className=""/>
+                        <img src={`/${user?.profileImg}`} alt="" className=""/>
                         <Link to={`/profile/${user?._id}`} className="serachePersonInformation ">
                             <p>{user?.username}</p>
                            <small className="status">{isFriend ? "Ami(e)" : "Non ami(e)"}</small>

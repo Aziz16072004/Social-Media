@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useNavigate,Link} from "react-router-dom"
-import axios from 'axios';
+import axios from '../axios';
 import Storiet from "stories-react";
 import "stories-react/dist/index.css";
 function Stories({user}) {
@@ -11,7 +11,7 @@ function Stories({user}) {
     const hundleStorie = async (user) =>{
         setShowStories(true)
         try{
-            const res = await axios.get(`http://localhost:8000/story/getStoriesForSwipper?userId=${user}`,{withCredentials: true })
+            const res = await axios.get(`/story/getStoriesForSwipper?userId=${user}`,{withCredentials: true })
             setStoriesContent(res.data);
         }catch(error){
             navigate("/");
@@ -20,7 +20,7 @@ function Stories({user}) {
     useEffect(()=>{
         const fetchStories = async ()=>{
             try {
-                const res = await axios.get('http://localhost:8000/story/getAllStories', { withCredentials: true });
+                const res = await axios.get('/story/getAllStories', { withCredentials: true });
                 setStories(res.data);
             } catch (error) {
                 console.log(error);
@@ -33,7 +33,7 @@ function Stories({user}) {
         <div className="allStories">
             <div className="storys">
                 <Link to={`/stories/create/${user?._id}`} className="block_story story createStory">
-                    <img src={`http://localhost:8000/${user?.profileImg}`} className='storyImg'/>
+                    <img src={`/${user?.profileImg}`} className='storyImg'/>
                     <div className='addStory'>
                         <ion-icon name="add-outline"></ion-icon>
                     </div>
@@ -41,9 +41,9 @@ function Stories({user}) {
                 </Link>
                     {stories.length>0 && stories.map((ele , index)=>(
                         <div className="block_story story" key={index} onClick={()=>{hundleStorie(ele.lastStory.user?._id)}}>
-                            <img src={`http://localhost:8000/${ele.lastStory.image}`} className='storyImg'/>
+                            <img src={`/${ele.lastStory.image}`} className='storyImg'/>
                             <div className="img-profile-story">
-                                <img src={`http://localhost:8000/${ele.lastStory.user?.profileImg}`} alt=""/>
+                                <img src={`/${ele.lastStory.user?.profileImg}`} alt=""/>
                             </div>
                             <p className="story_info">{ele.lastStory.user?.username}</p>
                         </div>
@@ -56,7 +56,7 @@ function Stories({user}) {
                     {storiesContent.length>0 ?
                     (<div className='swipperStoriesHeader'>
                         <div className='swipperStoriesHeaderContent profile-img'>
-                            <img src={`http://localhost:8000/${storiesContent[0].user?.profileImg}`} />
+                            <img src={`/${storiesContent[0].user?.profileImg}`} />
                             <div>{storiesContent[0].user?.username}</div>
                         </div>
                         <ion-icon name="close-outline" onClick={()=>{setShowStories(false)}}></ion-icon>

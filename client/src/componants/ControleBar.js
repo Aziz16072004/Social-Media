@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import React from 'react';
 import { Link,useNavigate} from 'react-router-dom';
-import axios from "axios";
+import axios from "../axios";
 import { v4 as uuidv4 } from 'uuid';
 import song from '../audio/notification.mp3';
 export default function ControleBar({socket , updateSetShowTheme}) {
@@ -63,7 +63,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
     const handleNotifications = async()=>{
         setDisplay(!display)
         try{
-            await axios.post(`http://localhost:8000/notification/readAllNotifications?user=${dataStoraged._id}`)
+            await axios.post(`/notification/readAllNotifications?user=${dataStoraged._id}`)
             setNewNotifi(0)
         }catch(err){
             console.log(err);
@@ -71,7 +71,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
     }
     const readOneNotification = async (Idnotifi) => {
         try {
-            const res = await axios.post(`http://localhost:8000/notification/readOneNotification?notifi=${Idnotifi}`);
+            const res = await axios.post(`/notification/readOneNotification?notifi=${Idnotifi}`);
             if (res) {
                 const updatedNotifications = notification.map((notifi) => {
                     if (notifi._id === Idnotifi) {
@@ -91,7 +91,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/notification/getNotification?receiver=${dataStoraged._id}`);
+                const res = await axios.get(`/notification/getNotification?receiver=${dataStoraged._id}`);
                 setNotification(res.data)
             } catch (error) {
                 console.log(error);
@@ -102,7 +102,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const res = await axios.get(`http://localhost:8000/user/getuser/${dataStoraged._id}`);
+            const res = await axios.get(`/user/getuser/${dataStoraged._id}`);
             setData(res.data);
             setNewNotifi(res.data.newNotifi)
           } catch (error) {
@@ -152,7 +152,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                 <Link to={`/profile/${data._id}`}  className="profile-bar" >
                     <div className="profile-bar-content"  >
                         <div className="profile-img">
-                            <img src={`http://localhost:8000/${data.profileImg}`}alt=""/>
+                            <img src={`/${data.profileImg}`}alt=""/>
                         </div>
                         <div className="info">
                             <b id="name-of-profile">{data.username}</b> <br/>
@@ -185,7 +185,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                     return(
                     <div className={notifi.read ? "notification-person " :"notification-person notRead"} key={uuidv4()} onClick={()=>{readOneNotification(notifi._id)}} >
                         <div className="profile-img">
-                            <img src={`http://localhost:8000/${notifi.sender?.profileImg}`} alt=""/>
+                            <img src={`/${notifi.sender?.profileImg}`} alt=""/>
                         </div>
                         <div className="notification-info"> 
                             <b>{notifi.sender?.username}</b> <small> {notifi.description}<br/>

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react"
 import { useParams ,Link} from "react-router-dom"
-import axios from "axios"
+import axios from "../axios"
 import send from "../imgs/paper-plane-top.png"
 export default function Chat({socket}){  
     const {id1} = useParams()
@@ -61,7 +61,7 @@ export default function Chat({socket}){
                 message,
             });
             }
-            await axios.post("http://localhost:8000/message/addmsg", {
+            await axios.post("/message/addmsg", {
                 from: id1,
                 to: showUser.user?._id,
                 message: message,
@@ -80,7 +80,7 @@ export default function Chat({socket}){
         const fetchData = async () => {
             try {
                 if (showUser) {
-                    const response = await axios.post("http://localhost:8000/message/getmsg", {
+                    const response = await axios.post("/message/getmsg", {
                         from: id1,
                         to: showUser.user?._id,
                         withCredentials: true 
@@ -98,9 +98,9 @@ export default function Chat({socket}){
     useEffect(()=>{
         const fetchData = async()=>{
             try {  
-                const res = await axios.get(`http://localhost:8000/user/getuser/${id1}`,{withCredentials: true })
+                const res = await axios.get(`/user/getuser/${id1}`,{withCredentials: true })
                 if (id2) {
-                    const res2 = await axios.get(`http://localhost:8000/user/getuser/${id2}`,{withCredentials: true })
+                    const res2 = await axios.get(`/user/getuser/${id2}`,{withCredentials: true })
                     setShowUser({user : res2.data})
                 }
                 setFriends(res.data.friends)
@@ -120,7 +120,7 @@ export default function Chat({socket}){
                     
                     <div className="message-person" onClick={()=>{setShowUser(friend)}}>
                         <div className="profile-img-friends ">
-                            <img src={`http://localhost:8000/${friend.user?.profileImg}`} alt=""/>
+                            <img src={`/${friend.user?.profileImg}`} alt=""/>
                             {users.some(user => user?.userId ===friend.user?._id) ?(
                                 <span className="activePerson"></span>
                             ):null}
@@ -139,7 +139,7 @@ export default function Chat({socket}){
                             
                         <div className="message-person ">
                             <div className="profile-img-friends ">
-                                    <img src={`http://localhost:8000/${showUser.user?.profileImg}`} alt=""/>
+                                    <img src={`/${showUser.user?.profileImg}`} alt=""/>
                             </div>
                             <div className="message-info"> 
                                 <b>{showUser.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
@@ -151,7 +151,7 @@ export default function Chat({socket}){
 
                                 {messages.map((msg)=>(
                                     <div className={msg.fromSelf ? "reciever" : "sender"} ref={scrollRef}>
-                                        {/* <img src={`http://localhost:8000/${showUser.user?.profileImg}`}/> */}
+                                        {/* <img src={`/${showUser.user?.profileImg}`}/> */}
                                         
                                         
                                         <div>{msg.message}</div>

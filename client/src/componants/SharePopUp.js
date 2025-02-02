@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axios";
 import { useEffect } from "react";
 
 export default function SharePopUp(props){
@@ -26,12 +26,12 @@ export default function SharePopUp(props){
                     return (
                         <div className="sharePopUpBodyUser" key={friend.user._id}>
                         <div>
-                            <img src={`http://localhost:8000/${friend.user.profileImg}`} alt={friend.user.username} />
+                            <img src={`/${friend.user.profileImg}`} alt={friend.user.username} />
                             <p>{friend.user.username}</p>
                         </div>
                         <button onClick={async ()=>{
                             try {
-                                await axios.post("http://localhost:8000/message/addmsgLink",{from:props.data._id ,to:friend.user._id,message:generateLink(),postId:props.postId})
+                                await axios.post("/message/addmsgLink",{from:props.data._id ,to:friend.user._id,message:generateLink(),postId:props.postId})
                             } catch (error) {
                                 console.log(error);
                             }

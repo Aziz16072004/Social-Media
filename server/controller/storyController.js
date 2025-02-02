@@ -9,7 +9,7 @@ const getStoriesForSwipper = async(req , res)=>{
         })
         const formattedStories = stories.map((story) => ({
             type: "image",
-            url: `http://localhost:8000/${story.image}`,
+            url: `/${story.image}`,
             duration: 4000,
             user:story.user,
             createdAt : story.createdAt
@@ -78,7 +78,7 @@ module.exports = {getStories ,addStory , getStoriesForSwipper,getAllStories}
 //         });
         // const formattedStories = stories.map((story) => ({
         //     type: "image",
-        //     url: `http://localhost:8000/${story.image}`,
+        //     url: `/${story.image}`,
         //     duration: 4000,
         // }));
         // console.log(formattedStories);

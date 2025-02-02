@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
@@ -24,7 +24,7 @@ export default function Profile({ socket }) {
     const handleSubmit = async (e) => {
       e.preventDefault(); 
       try {
-          const response = await axios.put("http://localhost:8000/posts/updatePost/", {
+          const response = await axios.put("/posts/updatePost/", {
             postId:selectedItem._id,
             name: postName
           });
@@ -39,7 +39,7 @@ export default function Profile({ socket }) {
         setOptionSelected(item);
         try {
             if (item === "delete") {
-                await axios.delete("http://localhost:8000/posts/deletePost", { data: { postId: selectedItem._id } });
+                await axios.delete("/posts/deletePost", { data: { postId: selectedItem._id } });
                 setPosts((prevPosts) => prevPosts.filter((post) => post._id !== selectedItem._id));
               }
               if(item ==="share"){
@@ -79,7 +79,7 @@ export default function Profile({ socket }) {
                     createdAt: Date.now()
                 });
             }
-            await axios.post("http://localhost:8000/user/addFriend/", { sender: dataStoraged._id, recipient: userData._id }, { withCredentials: true });
+            await axios.post("/user/addFriend/", { sender: dataStoraged._id, recipient: userData._id }, { withCredentials: true });
 
             userData.requests = [{ user: dataStoraged._id }, ...userData.requests];
             setUserData((prevUserData) => {
@@ -94,8 +94,8 @@ export default function Profile({ socket }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/home/getOneUser/${id}`, { withCredentials: true });
-                const res2 = await axios.get(`http://localhost:8000/posts/showPostJustForProfile?userId=${id}`, { withCredentials: true });
+                const res = await axios.get(`/home/getOneUser/${id}`, { withCredentials: true });
+                const res2 = await axios.get(`/posts/showPostJustForProfile?userId=${id}`, { withCredentials: true });
                 setUserData(res.data);
                 console.log(res.data);
                 setPosts(res2.data);
@@ -124,7 +124,7 @@ export default function Profile({ socket }) {
               </div>
             </div>
             <div className="userPost row"> 
-              <img src={`http://localhost:8000/${userData.profileImg}`} className="col-2" alt=""/>
+              <img src={`/${userData.profileImg}`} className="col-2" alt=""/>
               <div className="col-10">
                 <h4>{userData.username}</h4>
                 <p>{userData.email}</p>
@@ -140,7 +140,7 @@ export default function Profile({ socket }) {
               <div className="w-100 albums" >
               {selectedItem ? 
               
-              (<img src={`http://localhost:8000/${selectedItem.image}`} alt=""/>)
+              (<img src={`/${selectedItem.image}`} alt=""/>)
               : (<div>
                 <ion-icon name="albums-outline"></ion-icon>
                 <p>Add pictures or videos</p>      
@@ -166,7 +166,7 @@ export default function Profile({ socket }) {
                     <div className="row profileContent">
         <SharePopUp data={userData} postId={selectedItem} trigger={sharePopUp} setTrigger={setSharePopUp}/>
                         <div className="profileItem row col-10 col-md-8 mx-auto align-items-center">
-                            <img src={`http://localhost:8000/${userData.profileImg}`} alt="" className="col-lg-4 col-12 mx-auto" />
+                            <img src={`/${userData.profileImg}`} alt="" className="col-lg-4 col-12 mx-auto" />
                             <div className="col-12 col-lg-8">
                                 <div className="profileInfo row my-3 mx-auto justify-content-center align-items-center">
                                     <p className="col-md-5 col-4 mx-auto">{userData.username}</p>
@@ -198,7 +198,7 @@ export default function Profile({ socket }) {
                                 <div className="row">
                                     {posts.map((post) => (
                                         <div className="post col-12 col-md-6 col-lg-4" key={post._id}>
-                                            <img src={`http://localhost:8000/${post.image}`} alt="" />
+                                            <img src={`/${post.image}`} alt="" />
                                             <div className="postpic__content">
                                                 <div className='row'>
                                                     <div className="col-4">

@@ -1,6 +1,6 @@
 
 import { useState , useEffect } from "react"
-import axios from "axios"
+import axios from "../axios"
 import close from "../imgs/close.png"
 import send from "../imgs/paper-plane-top.png"
 import love from "../imgs/love.png"
@@ -23,7 +23,7 @@ export default function Bookmarks(){
     async function fetchData(postId){
         setShowPostInformation(true);
         try {
-          const res = await axios.get(`http://localhost:8000/posts/showPost?postId=${postId}`,{withCredentials: true });
+          const res = await axios.get(`/posts/showPost?postId=${postId}`,{withCredentials: true });
           setRatingData(res.data || {});
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -55,7 +55,7 @@ export default function Bookmarks(){
       
         const fetchProducts = async () => {
           try {
-            const response = await axios.get(`http://localhost:8000/user/postMarkes/${id}`);
+            const response = await axios.get(`/user/postMarkes/${id}`);
             console.log(response.data);
             setPosts(response.data);
         } catch (error) {
@@ -77,7 +77,7 @@ export default function Bookmarks(){
             <div className="post-title">
               <div className="profile-img img-post">
                 <img
-                  src={`http://localhost:8000/${postItem.post.userId.profileImg}`}
+                  src={`/${postItem.post.userId.profileImg}`}
                   alt=""
                 />
               </div>
@@ -89,7 +89,7 @@ export default function Bookmarks(){
             <div className="post-description">{postItem.post.description}</div>
             <div className="postes-images-post">
               <img
-                src={`http://localhost:8000/${postItem.post.image}`}
+                src={`/${postItem.post.image}`}
                 alt=""
               />
             </div>
@@ -106,14 +106,14 @@ export default function Bookmarks(){
                       if (!postItem.post.peopleRated.some(
                         (rate) => rate.user?._id === data._id
                       )) {
-                        await axios.post("http://localhost:8000/posts/addRate", {
+                        await axios.post("/posts/addRate", {
                           postId: postItem.post && postItem.post._id,
                           userId: data && data._id,
                           withCredentials: true,
                         });
                         updatedRates = postItem.post.rates + 1;
                       } else {
-                        await axios.delete("http://localhost:8000/posts/removeRate", {
+                        await axios.delete("/posts/removeRate", {
                           data: { postId: postItem.post && postItem.post._id, userId: data && data._id },
                           withCredentials: true,
                         });
@@ -169,7 +169,7 @@ export default function Bookmarks(){
                     index < 3 ? (
                       <img
                         key={rater.user?._id}
-                        src={`http://localhost:8000/${rater.user?.profileImg}`}
+                        src={`/${rater.user?.profileImg}`}
                         alt=""
                         className={`img${index + 1}`}
                       />
@@ -215,7 +215,7 @@ export default function Bookmarks(){
                             >
                               <div>
                                 <img
-                                  src={`http://localhost:8000/${rate.user?.profileImg}`}
+                                  src={`/${rate.user?.profileImg}`}
                                   alt=""
                                 />
                                 <img
@@ -258,7 +258,7 @@ export default function Bookmarks(){
                             ratingData.comments.map((com) => (
                               <div className="comment" key={com._id}>
                                 <img
-                                  src={`http://localhost:8000/${com.user?.profileImg}`}
+                                  src={`/${com.user?.profileImg}`}
                                   alt=""
                                 />
                                 <div className="comment_description">
@@ -298,7 +298,7 @@ export default function Bookmarks(){
               {postItem.post.comments.length > 0 && (
                 <div className="comment">
                   <img
-                    src={`http://localhost:8000/${postItem.post.comments[0].user?.profileImg}`}
+                    src={`/${postItem.post.comments[0].user?.profileImg}`}
                     alt=""
                   />
                   <div className="comment_description">
@@ -313,7 +313,7 @@ export default function Bookmarks(){
               )}
               <div className="addComment">
                 <img
-                  src={`http://localhost:8000/${data.profileImg}`}
+                  src={`/${data.profileImg}`}
                   alt=""
                 />
                 <div className="comment_description">
@@ -329,7 +329,7 @@ export default function Bookmarks(){
                     className="imggggggg"
                     onClick={async () => {
                       setComment("");
-                      await axios.post("http://localhost:8000/posts/addComment", {
+                      await axios.post("/posts/addComment", {
                         postId: postItem.post && postItem.post._id,
                         userId: data && data._id,
                         comment: comment,

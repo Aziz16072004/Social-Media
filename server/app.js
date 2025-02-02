@@ -11,7 +11,7 @@ const {Server} = require("socket.io");
 const { requireAuth } = require('./middlewares/auth');
 
 app.use(cors({
-    origin: ['http://localhost:3000','http://localhost:3001'],
+    origin: ['http://localhost:3000','http://localhost:3001','https://social-media-2-o8uj.onrender.com'],
     credentials: true 
 }));
 app.use(cookieParser());
@@ -61,11 +61,11 @@ const connectDB = async () => {
     }
 } 
 connectDB()
-const PORT = process.env.PORT ||8000;
+const PORT = process.env.PORT || 8000;
 const server = http.createServer(app) 
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:3000","http://localhost:3001"],
+        origin: ["http://localhost:3000","http://localhost:3001","https://social-media-2-o8uj.onrender.com"],
         credentials: true
     }
 });

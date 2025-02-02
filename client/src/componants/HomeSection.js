@@ -1,7 +1,7 @@
 import { useState , useEffect, useRef } from "react"
 import * as React from 'react';
 import {Link} from "react-router-dom"
-import axios from "axios"
+import axios from "../axios"
 
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -65,7 +65,7 @@ export default function HomeSection({theme}) {
       
         setShowPostInformation(true);
         try {
-          const res = await axios.get(`http://localhost:8000/posts/showPost?postId=${postId}`,{ withCredentials: true });
+          const res = await axios.get(`/posts/showPost?postId=${postId}`,{ withCredentials: true });
           setRatingData(res.data || {});
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -76,14 +76,14 @@ export default function HomeSection({theme}) {
           let updatedRates;
           
           if (!post.peopleRated.some(rate => rate.user?._id === data._id)) {
-            await axios.post("http://localhost:8000/posts/addRate", {
+            await axios.post("/posts/addRate", {
               postId: post && post._id,
               userId: data && data._id,
               withCredentials: true 
             });
             updatedRates = post.rates + 1;
           } else {
-            await axios.delete("http://localhost:8000/posts/removeRate", {
+            await axios.delete("/posts/removeRate", {
               data: { postId: post && post._id, userId: data && data._id },
               withCredentials: true 
             });
@@ -150,7 +150,7 @@ export default function HomeSection({theme}) {
       }
       const fetchProducts = async () => {
         try {
-          const response = await axios.get("http://localhost:8000/posts",{ withCredentials: true });
+          const response = await axios.get("/posts",{ withCredentials: true });
           setPosts(response.data);
       } catch (error) {
           console.error('Error fetching posts:', error);
@@ -175,7 +175,7 @@ export default function HomeSection({theme}) {
               </div>
             </div>
             <div className="userPost row"> 
-              <img src={`http://localhost:8000/${data.profileImg}`} className="col-2" alt=""/>
+              <img src={`/${data.profileImg}`} className="col-2" alt=""/>
               <div className="col-10">
                 <h4>{data.username}</h4>
                 <p>{data.email}</p>
@@ -226,7 +226,7 @@ export default function HomeSection({theme}) {
         <div className="post-bar" >
                     <div className="profile-img profile-img-post">
                     {data && data.profileImg && (
-                        <img src={`http://localhost:8000/${data.profileImg}`} alt=""/>
+                        <img src={`/${data.profileImg}`} alt=""/>
                     )}
                     </div>
                     <div className="input-post-bar">
@@ -285,7 +285,7 @@ export default function HomeSection({theme}) {
                     <div className="post-title">
                             <div className="profile-img img-post">
                            
-                                <img src={`http://localhost:8000/${post.userId?.profileImg}`} alt=""/>
+                                <img src={`/${post.userId?.profileImg}`} alt=""/>
                             
                                 </div>
                             <div className="post-name-utilisateur">
@@ -309,7 +309,7 @@ export default function HomeSection({theme}) {
                     </div>
                     <div className="icons-posts-right"><img  src={data.postMarkes.some(marke => marke.post === post._id) ? bookmark : ribbon} alt="" onClick={async ()=>{
                       try {
-                        const res = await axios.post("http://localhost:8000/posts/postMarkes" , {
+                        const res = await axios.post("/posts/postMarkes" , {
                           postId: post && post._id,
                           userId: data && data._id,
                            withCredentials: true ,
@@ -326,7 +326,7 @@ export default function HomeSection({theme}) {
                                 <div className="line1-vue">
                                   <div>
                                   {post?.peopleRated?.map((rater, index) => (
-  index < 3 ? <img src={`http://localhost:8000/${rater.user?.profileImg}`} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
+  index < 3 ? <img src={`/${rater.user?.profileImg}`} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
 ))}
               </div>
                                     <p onClick={()=>{fetchData(post._id) ;setShowRatings(true)}}>Like by <b>{post?.peopleRated?.length > 0 ? post?.peopleRated[0]?.user?.username : ""}</b> and <b>{post?.rates > 0 ? post?.rates - 1 : 0} other</b></p>
@@ -347,7 +347,7 @@ export default function HomeSection({theme}) {
             ratingData.peopleRated.map((rate) => (
               <div className="personRateInformation" key={rate.user?._id}>
                 <div>
-                  <img src={`http://localhost:8000/${rate.user?.profileImg}`} alt="" />
+                  <img src={`/${rate.user?.profileImg}`} alt="" />
                   <img src={loveColored} className="coloredHeartRate" alt="Love Colored" />
                 </div>
                 <p>{rate.user?.username}</p>
@@ -371,7 +371,7 @@ export default function HomeSection({theme}) {
           ratingData.comments.map((com)=>(
             <div className="comment" key={com._id}>
               
-                  <img src={`http://localhost:8000/${com.user?.profileImg}`} alt=""/>
+                  <img src={`/${com.user?.profileImg}`} alt=""/>
                   <div className="comment_description">
                     <p className="comment_title"><b>{com.user?.username}</b></p>
                     <p className="comment_writing"> {com.comment}</p>
@@ -396,7 +396,7 @@ export default function HomeSection({theme}) {
               {post?.comments?.length>0 ?
                 <div className="comment">
                   
-                  <img src={`http://localhost:8000/${post?.comments[0]?.user?.profileImg}`} alt=""/>
+                  <img src={`/${post?.comments[0]?.user?.profileImg}`} alt=""/>
                   <div className="comment_description">
                     <p className="comment_title"><b>{post?.comments[0]?.user?.username}</b></p>
                     <p className="comment_writing"> {post?.comments[0]?.comment}</p>
@@ -404,12 +404,12 @@ export default function HomeSection({theme}) {
                 </div>
             :null}
                 <div className="addComment">
-                <img src={`http://localhost:8000/${data.profileImg}`} alt=""/>
+                <img src={`/${data.profileImg}`} alt=""/>
                   <div className="comment_description">
                     <input type="text" placeholder="write a comment ...." value={comment} onChange={(e)=>setComment(e.target.value)} />
                     <img src={send} alt="addcomment" className="imageAddComment" onClick={async ()=>{
                       setComment("");
-                      await axios.post("http://localhost:8000/posts/addComment", {
+                      await axios.post("/posts/addComment", {
                         postId: post && post._id,
                         userId: data && data._id,
                         comment : comment,
