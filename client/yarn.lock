@@ -9655,6 +9655,28 @@ slash@^4.0.0:
   resolved "https://registry.npmjs.org/slash/-/slash-4.0.0.tgz"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
+"social_media_project@file:..":
+  version "1.0.0"
+  resolved "file:.."
+  dependencies:
+    bcryptjs "^2.4.3"
+    cookie-parser "^1.4.7"
+    cors "^2.8.5"
+    dotenv "^16.4.7"
+    ejs "^3.1.10"
+    express "^4.21.2"
+    express-async-handler "^1.2.0"
+    firebase "^11.2.0"
+    firebase-admin "^13.0.2"
+    fs "^0.0.1-security"
+    joi "^17.13.3"
+    jsonwebtoken "^9.0.2"
+    mongoose "^8.9.5"
+    multer "^1.4.5-lts.1"
+    path "^0.12.7"
+    socket.io "^4.8.1"
+    uuid "^11.0.5"
+
 socket.io-client@^4.7.4:
   version "4.7.4"
   resolved "https://registry.npmjs.org/socket.io-client/-/socket.io-client-4.7.4.tgz"
