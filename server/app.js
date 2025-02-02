@@ -20,20 +20,17 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/storiesImgs', express.static(path.join(__dirname, 'storiesImgs')));
 
 // API Routes
-app.use("/auth", require("./routes/authRoute"));
-app.use("/home", requireAuth, require("./routes/homeRoute"));
-app.use("/user", require("./routes/userRoute"));
-app.use("/story", require("./routes/storyRoute"));
-app.use("/notification", require("./routes/notificationRoute"));
-app.use("/posts", require("./routes/postRoute"));
-app.use("/message", require("./routes/messageRoute"));
+app.use("/api//auth", require("./routes/authRoute"));
+app.use("/api//home", requireAuth, require("./routes/homeRoute"));
+app.use("/api//user", require("./routes/userRoute"));
+app.use("/api//story", require("./routes/storyRoute"));
+app.use("/api//notification", require("./routes/notificationRoute"));
+app.use("/api//posts", require("./routes/postRoute"));
+app.use("/api//message", require("./routes/messageRoute"));
 
 // -------------------------- Deployment ------------------------------
 
-// Serve API route for general check
-app.get("/api", (req, res) => {
-    res.send("API is running..");
-});
+
 
 // -------------------------- React Deployment ------------------------------
 const __dirname1 = path.resolve();
