@@ -2,7 +2,7 @@ const userSchema = require("../models/user");
 const notificationSchema = require("../models/notification");
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
-const path = require("path");
+
 
 const Add_InsertUser = async (req, res) => {
     const { username, email, password } = req.body;
@@ -33,7 +33,6 @@ const Add_InsertUser = async (req, res) => {
 
 const checkUser = async (req, res) => {
     const { email, password } = req.body;
-    return res.json("nonexiste");
     try {
         const user = await userSchema.findOne({ email: email }).populate({
             path: 'friends.user',  
