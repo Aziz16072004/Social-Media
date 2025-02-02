@@ -8,5 +8,6 @@ router.delete("/rejectfriend" , userController.rejectfriend)
 router.get("/getuser/:id" , userController.getUser)
 router.get("/postMarkes/:id" , userController.postMarkes)
 router.patch("/updateUser/:id", upload.single('profileImg'), userController.updateUser);
+
 module.exports = router
 
