@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseURL = process.env.NODE_ENV === 'production'
-  ? 'http://localhost:10000'
+  ? 'https://social-media-2-o8uj.onrender.com'
   : 'http://localhost:8000';
 
 axios.defaults.baseURL = baseURL;
