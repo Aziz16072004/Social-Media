@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from '../../axios'; 
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import "./login.css";
@@ -9,7 +9,7 @@ function Signup() {
 
   async function onSubmit(data) {
     try {
-      const res = await axios.post("http://localhost:8000/auth/signup", {
+      const res = await axios.post("/auth/signup", {
         username: data.username,
         email: data.email,
         password: data.password
