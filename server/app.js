@@ -28,7 +28,7 @@ app.use("/home" ,requireAuth,require("./routes/homeRoute"))
 
 app.use("/user" , require("./routes/userRoute"))
 app.use("/story", require("./routes/storyRoute"));
-app.use("/notification" , require("./routes/NotificationRoute"))
+app.use("/notification" , require("./routes/notificationRoute"))
 app.use("/posts" , require("./routes/postRoute"))
 app.use("/message" , require("./routes/messageRoute"))
 
