@@ -20,10 +20,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/storiesImgs', express.static(path.join(__dirname, 'storiesImgs')));
 
 // API Routes
-app.use("/auth1", (req, res) => {
-    console.log("This is the sign-in API");
-    res.send("Sign-in API hit successfully");
-});
 app.use("/auth", require("./routes/authRoute"));
 app.use("/home", requireAuth, require("./routes/homeRoute"));
 app.use("/user", require("./routes/userRoute"));
