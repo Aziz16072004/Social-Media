@@ -33,7 +33,7 @@ const Add_InsertUser = async (req, res) => {
 
 const checkUser = async (req, res) => {
     const { email, password } = req.body;
-
+    return res.json("nonexiste");
     try {
         const user = await userSchema.findOne({ email: email }).populate({
             path: 'friends.user',  
