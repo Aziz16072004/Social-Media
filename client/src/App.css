@@ -41,9 +41,7 @@ body *{
     --color-white: hsl(252, 30%, var(--white-color-lightness));
     --color-dark:  hsl(252, 30%, var(--dark-color-lightness)) 
 }
-.messanger{
-    background-color: var(--main-background-color);
-}
+
 .blackMode{
     --main-background-color : black;
     --color-white: #110e1b;
@@ -88,7 +86,7 @@ body *{
 .profile-img-friends{
     margin: 11px 15px;
 }
-.profile-img img ,.profile-img-friends img{
+.profile-img img,.userContainer img ,.profile-img-friends img{
 
     width: 45px;
     height: 45px;
@@ -1644,3 +1642,90 @@ font-size: 20px ;
     font-size: 35px;
     cursor: pointer;
 }
+.messangerBody{
+    background-color: rgb(217, 217, 217);
+}
+.messangerContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.messanger{
+    background-color: white;
+    border-radius: 15px;
+    min-height: 60vh;
+  
+    overflow-y: scroll;
+    width: 90vw;
+    padding: 25px 35px;
+}
+.userContainer > div{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+}
+.userContainer{
+    display: flex;
+    justify-content: space-between;
+}
+.userContainer button{
+    border: none;
+    padding: 0 20px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #353436;
+    color: white;
+    font-weight: 500;
+    
+}
+.messanger h3{
+    font-size: 17px;
+    font-weight: 600;
+}
+.friendsContainer >div p{
+    font-size: 14px;
+    font-weight: bold;
+    color: rgb(50, 35, 33);
+}
+.messanger input:focus{
+    outline: none;
+}
+.messanger input{
+    width: 100%;
+    border: none;
+    font-weight: 600;
+    margin-bottom: 10px;
+    
+}
+.messanger .searchIcon{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+.friendsContainer {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+.friendsContainer > div{
+    margin: 20px 0;
+    position: relative;
+}
+.userContainer span{
+    width: 13px;
+    height: 13px;
+    background-color: gray;
+    border-radius: 50%;
+}
+.friendsContainer .userContainer {
+ align-items: center;
+ padding-right: 20px;
+  }
+  .friendsContainer .userContainer p {
+   max-width: 250px;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+  }
+  

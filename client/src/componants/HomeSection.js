@@ -121,7 +121,9 @@ export default function HomeSection({theme}) {
       formData.append('image', postImage);
       formData.append('userId', data._id);
       try {
-        const response = await axios.post(" ", formData,{withCredentials: true });
+        const response = await axios.post("/posts/upload", formData,{withCredentials: true });
+        // console.log(response);
+        
         setPosts(prevPosts => [response.data,...prevPosts]);
       } catch (error) {
         console.error('Error uploading Post:', error);

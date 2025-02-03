@@ -104,6 +104,8 @@ export default function ControleBar({socket , updateSetShowTheme}) {
           try {
             const res = await axios.get(`/user/getuser/${dataStoraged._id}`);
             setData(res.data);
+            console.log(res.data);
+            
             setNewNotifi(res.data.newNotifi)
           } catch (error) {
             console.log(error);
@@ -152,7 +154,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                 <Link to={`/profile/${data._id}`}  className="profile-bar" >
                     <div className="profile-bar-content"  >
                         <div className="profile-img">
-                            <img src={`/${data.profileImg}`}alt=""/>
+                            <img src={`${data.profileImg}`}alt=""/>
                         </div>
                         <div className="info">
                             <b id="name-of-profile">{data.username}</b> <br/>

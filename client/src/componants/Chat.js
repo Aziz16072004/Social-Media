@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react"
 import { useParams ,Link} from "react-router-dom"
 import axios from "../axios"
+import { IoSearchSharp } from "react-icons/io5";
+
 import send from "../imgs/paper-plane-top.png"
 export default function Chat({socket}){  
     const {id1} = useParams()
@@ -111,76 +113,203 @@ export default function Chat({socket}){
         fetchData()
     },[])
     return(
-        <div className='row messanger'>
-         
-            <div className="chat col-12 col-md-9 row mx-auto align-items-center ">   
-                
-                <div className={!showUser?("friendsBar col-12 col-md-4"):("friendsBar friendsBarHidden col-12 col-md-4")}>    
-                {friends.map((friend)=>(
-                    
-                    <div className="message-person" onClick={()=>{setShowUser(friend)}}>
-                        <div className="profile-img-friends ">
-                            <img src={`/${friend.user?.profileImg}`} alt=""/>
-                            {users.some(user => user?.userId ===friend.user?._id) ?(
-                                <span className="activePerson"></span>
-                            ):null}
-                        </div>
-                        <div className="message-info"> 
-                            <b>{friend.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
-                        </div>
-                    </div>
-                    ))}
-                </div>
-               
-                {showUser ? (
-                    <div className="chatBar col-12 col-md-8 ">                    
-                    <div className={showUser? "chatNavBar" :"chatNavBar chatNavBarHidden" }>
-                            <ion-icon name="arrow-back-outline" onClick={()=>setShowUser(false)}></ion-icon>
-                            
-                        <div className="message-person ">
-                            <div className="profile-img-friends ">
-                                    <img src={`/${showUser.user?.profileImg}`} alt=""/>
-                            </div>
-                            <div className="message-info"> 
-                                <b>{showUser.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="chatBar-content">
-                            <div className="discussion">
+    <div className="messangerBody">
 
-                                {messages.map((msg)=>(
-                                    <div className={msg.fromSelf ? "reciever" : "sender"} ref={scrollRef}>
-                                        {/* <img src={`/${showUser.user?.profileImg}`}/> */}
-                                        
-                                        
-                                        <div>{msg.message}</div>
-                                        
-                                    </div>
-                                ))}
-                                {waitingMessage ? (
-                                    <div className= "sender">
-                                        <p>...</p>
-                                    </div>
-                                    ):null}
-                            </div>
-                    </div>
-                        <div className="addChat">
-                            <input type="text" value={message}onChange={(e)=>{
-                                setMessage(e.target.value) 
-                                if (socket) {
-                                socket.emit("sending-message", {
-                                    to: showUser.user?._id,
-                                });
-                            }
-                            }}/>
-                            <img src={send} alt="addcomment" className="imgSendMessage" onClick={hundleSendMessage}/>
-                            
-                        </div>
+    <div className='messangerContainer'>
+        <div className='messanger'>
+
+            <div className="userContainer">
+                <div>
+
+                <img src="/uploads/unknown.jpg"/>
+                <div>
+                <h3>Aziz Chaabani</h3>
+                <p>Active now</p>
                 </div>
-                ):null}
-                
+                </div>
+                <button>Logout</button>
             </div>
-        </div>
+            <hr/>
+                    <div>
+                       <input type="text" placeholder="Select a user to start chat"/>
+                        <IoSearchSharp className="searchIcon"/>
+                    </div>
+                <div className="friendsContainer">
+
+                  
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span style={{"background":"green"}}></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div className="userContainer">
+                        <div>
+                            <img src="/uploads/unknown.jpg"/>
+                            <div>
+                            <h3>Aziz Chaabani</h3>
+                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            </div>
+                        </div>
+                        <span></span>
+                    </div>
+                
+                </div>
+            </div>
+           </div>
+                </div>
     )
 }
+ // <div className="chat col-12 col-md-9 row mx-auto align-items-center ">   
+                
+            //     <div className={!showUser?("friendsBar col-12 col-md-4"):("friendsBar friendsBarHidden col-12 col-md-4")}>    
+            //     {friends.map((friend)=>(
+                    
+            //         <div className="message-person" onClick={()=>{setShowUser(friend)}}>
+            //             <div className="profile-img-friends ">
+            //                 <img src={`/${friend.user?.profileImg}`} alt=""/>
+            //                 {users.some(user => user?.userId ===friend.user?._id) ?(
+            //                     <span className="activePerson"></span>
+            //                 ):null}
+            //             </div>
+            //             <div className="message-info"> 
+            //                 <b>{friend.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
+            //             </div>
+            //         </div>
+            //         ))}
+            //     </div>
+               
+            //     {showUser ? (
+            //         <div className="chatBar col-12 col-md-8 ">                    
+            //         <div className={showUser? "chatNavBar" :"chatNavBar chatNavBarHidden" }>
+            //                 <ion-icon name="arrow-back-outline" onClick={()=>setShowUser(false)}></ion-icon>
+                            
+            //             <div className="message-person ">
+            //                 <div className="profile-img-friends ">
+            //                         <img src={`/${showUser.user?.profileImg}`} alt=""/>
+            //                 </div>
+            //                 <div className="message-info"> 
+            //                     <b>{showUser.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
+            //                 </div>
+            //             </div>
+            //         </div>
+            //         <div className="chatBar-content">
+            //                 <div className="discussion">
+
+            //                     {messages.map((msg)=>(
+            //                         <div className={msg.fromSelf ? "reciever" : "sender"} ref={scrollRef}>
+            //                             {/* <img src={`/${showUser.user?.profileImg}`}/> */}
+                                        
+                                        
+            //                             <div>{msg.message}</div>
+                                        
+            //                         </div>
+            //                     ))}
+            //                     {waitingMessage ? (
+            //                         <div className= "sender">
+            //                             <p>...</p>
+            //                         </div>
+            //                         ):null}
+            //                 </div>
+            //         </div>
+            //             <div className="addChat">
+            //                 <input type="text" value={message}onChange={(e)=>{
+            //                     setMessage(e.target.value) 
+            //                     if (socket) {
+            //                     socket.emit("sending-message", {
+            //                         to: showUser.user?._id,
+            //                     });
+            //                 }
+            //                 }}/>
+            //                 <img src={send} alt="addcomment" className="imgSendMessage" onClick={hundleSendMessage}/>
+                            
+            //             </div>
+            //     </div>
+            //     ):null}
+                
+            // </div>
+            

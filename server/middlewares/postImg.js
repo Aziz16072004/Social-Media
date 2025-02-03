@@ -1,8 +1,9 @@
-// /middleware/uploadMiddleware.js
 const multer = require("multer");
 
-// Memory storage for multer
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// Set up memory storage for multer
+const storage = multer.memoryStorage();  // Store file in memory, not disk
 
-module.exports = upload;
+// Create multer instance with memory storage and single image field
+const upload = multer({ storage: storage }).single("image");  // Handles 'image' field
+
+module.exports = upload;  // Export for use in routes
