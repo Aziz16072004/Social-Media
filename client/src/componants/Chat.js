@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { useParams ,Link} from "react-router-dom"
 import axios from "../axios"
 import { IoSearchSharp } from "react-icons/io5";
+import { IoMdArrowBack } from "react-icons/io";
 
 import send from "../imgs/paper-plane-top.png"
 export default function Chat({socket}){  
@@ -116,7 +117,7 @@ export default function Chat({socket}){
     <div className="messangerBody">
 
     <div className='messangerContainer'>
-        <div className='messanger'>
+        <div className={!showUser?("messanger "):("messanger friendsBarHidden ")} >
 
             <div className="userContainer">
                 <div>
@@ -134,135 +135,51 @@ export default function Chat({socket}){
                        <input type="text" placeholder="Select a user to start chat"/>
                         <IoSearchSharp className="searchIcon"/>
                     </div>
-                <div className="friendsContainer">
+                <div className="friendsContainer" >
 
-                  
-                    <div className="userContainer">
+                {friends.map((friend)=>(
+                    
+                    <div className="userContainer" onClick={()=>{setShowUser(friend)}}>
                         <div>
                             <img src="/uploads/unknown.jpg"/>
                             <div>
-                            <h3>Aziz Chaabani</h3>
+                            <h3>{friend.user?.username}</h3>
                             <p>you : Chat will be sent to that us Chat will be sent to that us </p>
                             </div>
                         </div>
-                        <span></span>
+                        {users.some(user => user?.userId ===friend.user?._id) ?(
+                                 <span style={{"background":"green"}}></span>
+                             ):<span></span>}
+                   
                     </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span style={{"background":"green"}}></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                    <div className="userContainer">
-                        <div>
-                            <img src="/uploads/unknown.jpg"/>
-                            <div>
-                            <h3>Aziz Chaabani</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
-                            </div>
-                        </div>
-                        <span></span>
-                    </div>
-                
+                    
+                ))}
                 </div>
             </div>
+            {showUser ? (
+                <div className="selectedFriend">
+                    <div className="messanger ">   
+                                    
+                        <IoMdArrowBack className="backArrow" onClick={()=>setShowUser(false)}/>
+                        <div className="userContainer">
+                <div>
+                    <img src="/uploads/unknown.jpg"/>
+                    <div>
+                    <h3>Aziz Chaabani</h3>
+                    <p>Active now</p>
+                    </div>
+                </div>
+                
+            </div>
+                    </div>
+                    </div>
+                ):null}
+                
            </div>
                 </div>
     )
 }
- // <div className="chat col-12 col-md-9 row mx-auto align-items-center ">   
-                
-            //     <div className={!showUser?("friendsBar col-12 col-md-4"):("friendsBar friendsBarHidden col-12 col-md-4")}>    
-            //     {friends.map((friend)=>(
-                    
-            //         <div className="message-person" onClick={()=>{setShowUser(friend)}}>
-            //             <div className="profile-img-friends ">
-            //                 <img src={`/${friend.user?.profileImg}`} alt=""/>
-            //                 {users.some(user => user?.userId ===friend.user?._id) ?(
-            //                     <span className="activePerson"></span>
-            //                 ):null}
-            //             </div>
-            //             <div className="message-info"> 
-            //                 <b>{friend.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
-            //             </div>
-            //         </div>
-            //         ))}
-            //     </div>
-               
+ 
             //     {showUser ? (
             //         <div className="chatBar col-12 col-md-8 ">                    
             //         <div className={showUser? "chatNavBar" :"chatNavBar chatNavBarHidden" }>
