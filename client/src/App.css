@@ -932,7 +932,7 @@ main{
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 1410px !important;
     }
-    .sender {
+    .sender > div {
 
         width: 75% !important;
     }
@@ -1366,37 +1366,86 @@ position: relative;
     position: relative;
 }
 .addChat input{
-    width: 95%;
-    background: var(--main-background-color);
+    width: 100%;
     padding: 15px 10px;
-    border-radius: 19px;
-    
-    border: none;
+    border: 1px solid rgb(192, 192, 192);
+    outline: none;
 }
 .addChat{
-    position: absolute;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    bottom: 10px;
-  }
-.sender{
-
+    padding: 10px 25px;
     
-    padding: 12px 25px;
-    max-width: 70%;
-    align-self: end;
+  }
+  .addChat div{
+    width: 100%;
+    border-radius: 10px;
     position: relative;
-    border-radius: 5px;
-    overflow-wrap: break-word;
+    overflow: hidden;
+  }
+  .addChat div .sendIcon{
+    position: absolute;
+    right: 0;
+    fill: white;
+    background-color: #7e7e7e;
+    width: 60px;
+    height: 100%;
+    padding: 12px;
+  }
+
+
+  .sender div ,.reciever {
+  position: relative;
+
+  }
+.sender div div , .sender div div  {
     background-color: var(--main-color);
     color: white;
+    border-radius: 15px;
+    padding: 12px 25px;
+    z-index: 1; 
+}
+.loadingMessage{
+    position: relative;
+}
+.loadingMessage div{
+    z-index: 5;
+}
+.sender span {
+    left: 0;
+}
+.reciever span {
+    right: 0;
+}
+
+.sender span ,.loadingMessage span   {
+    background-color: var(--main-color);
+    
+}
+.reciever span {
+    background-color: #333333;
+    /* background-color: var(--main-color); */
+
+}
+.sender span ,.reciever span ,.loadingMessage span {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    bottom: 0;
+   
+}
+
+
+.sender {
+ 
+    max-width: 70%;
+    align-self: start;
+    position: relative;
+    border-radius: 5px;
+   
 }
 
 .discussion div{
     margin: 6px 0;
-    
 }
 .discussion{
     padding: 0px 0px 54px 70px;
@@ -1416,19 +1465,22 @@ position: relative;
     margin-right: 0;
     margin-left: 0;
 }
-.reciever{
-   align-self: start;
-   max-width: 70%;
 
+
+.reciever {
+    max-width: 70%;
+    align-self: end;
 }
-.reciever div {
+.reciever div div{
+    position: relative;
     padding: 12px 25px;
     overflow-wrap: break-word;
-    border-radius: 5px;
+    border-radius: 15px;
     color: white;
-    align-self: right;
     text-align: right;
-    background-color: blue;
+    background-color: #333333;
+    z-index: 5;
+
 }
 .sender-content{
     background-color:   rgba(128, 128, 128, 0.41);
@@ -1643,7 +1695,7 @@ font-size: 20px ;
     cursor: pointer;
 }
 .messangerBody{
-    background-color: rgb(217, 217, 217);
+    background-color: #F7F7F7;
 }
 .messangerContainer{
     display: flex;
@@ -1651,16 +1703,33 @@ font-size: 20px ;
     justify-content: center;
     height: 100vh;
 }
+
 .messanger{
+    min-height: 90vh;
     background-color: white;
     border-radius: 15px;
-    min-height: 60vh;
-  
+    box-shadow: 1px 4px 20px 20px #efefef;
     overflow-y: scroll;
     width: 90vw;
     padding: 25px 35px;
 }
-.userContainer > div{
+.selectedFriend{
+    box-shadow: 1px 4px 20px 20px #efefef;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    background-color: white;
+    width: 90vw;
+    border-radius: 15px;
+   
+    
+}
+.selectedFriendHeader{
+    padding: 15px 30px;
+    
+}
+.userContainer > div ,.selectedFriendHeader{
     display: flex;
     align-items: center;
     gap: 25px;
@@ -1680,7 +1749,7 @@ font-size: 20px ;
     font-weight: 500;
     
 }
-.messanger h3{
+.messangerContainer h3{
     font-size: 17px;
     font-weight: 600;
 }
@@ -1719,9 +1788,34 @@ font-size: 20px ;
     border-radius: 50%;
 }
 .friendsContainer .userContainer {
- align-items: center;
- padding-right: 20px;
- cursor: pointer;
+    align-items: center;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+ .chatContent >div{
+    display: flex;
+    
+    
+} 
+.chatContent img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    align-self: end;
+    margin-right: 10px;
+}
+.chatContent{
+    display: flex;
+    flex-direction: column;
+    
+    gap: 7px;
+    flex-grow: 1;
+    height: 0; 
+    padding: 11px 14px;
+    width: 100%;
+    overflow-y: auto;
+    background-color: #F7F7F7;
   }
   .friendsContainer .userContainer p {
    max-width: 250px;
@@ -1739,3 +1833,82 @@ font-size: 20px ;
     font-weight: 600;
     cursor: pointer;
   }
+
+
+
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 45px;
+    height: 9px;
+    margin-left: -22px;
+    margin-top: -13px;
+    text-align: center;
+}
+
+.spinner > div {
+    width: 9px;
+    height: 9px;
+    background-color: #dcdcdc;
+    border-radius: 100%;
+    display: inline-block;
+    animation: bouncedelay 1.4s infinite ease-in-out;
+    animation-fill-mode: both; 
+}
+
+.spinner .bounce1 {
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    animation-delay: -0.16s;
+}
+
+
+@keyframes bouncedelay {
+    0%, 80%, 100% {
+        transform: scale(0.0);
+    }
+    40% {
+        transform: scale(1.0);
+    }
+}
+
+
+#loading-bubble {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    min-width: 73px; 
+    min-height: 40px; 
+    border-radius: 15px;
+    box-sizing: border-box;
+    position: relative;
+    background-color: var(--main-color);
+    
+}
+
+#loading-bubble.grey {
+    background-color: #a5b0b5;
+}
+
+
+
+
+#loading-bubble .spinner {
+    position: static !important;
+    margin-top: -11px;
+    margin-left: 0px;
+}
+
+#loading-bubble .spinner div {
+    background-color: #fff;
+}
+
+
+
+

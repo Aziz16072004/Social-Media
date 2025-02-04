@@ -3,8 +3,8 @@ import { useParams ,Link} from "react-router-dom"
 import axios from "../axios"
 import { IoSearchSharp } from "react-icons/io5";
 import { IoMdArrowBack } from "react-icons/io";
+import { IoIosSend } from "react-icons/io";
 
-import send from "../imgs/paper-plane-top.png"
 export default function Chat({socket}){  
     const {id1} = useParams()
     const {id2} = useParams()
@@ -117,6 +117,7 @@ export default function Chat({socket}){
     <div className="messangerBody">
 
     <div className='messangerContainer'>
+        
         <div className={!showUser?("messanger "):("messanger friendsBarHidden ")} >
 
             <div className="userContainer">
@@ -125,7 +126,10 @@ export default function Chat({socket}){
                 <img src="/uploads/unknown.jpg"/>
                 <div>
                 <h3>Aziz Chaabani</h3>
-                <p>Active now</p>
+                {users.some(user => user?.userId ===id1) ?(
+                                  <p>Active now</p>
+                             ): <p>offile</p>}
+               
                 </div>
                 </div>
                 <button>Logout</button>
@@ -158,20 +162,74 @@ export default function Chat({socket}){
             </div>
             {showUser ? (
                 <div className="selectedFriend">
-                    <div className="messanger ">   
+                    <div className="selectedFriendHeader">   
                                     
                         <IoMdArrowBack className="backArrow" onClick={()=>setShowUser(false)}/>
                         <div className="userContainer">
                 <div>
                     <img src="/uploads/unknown.jpg"/>
                     <div>
-                    <h3>Aziz Chaabani</h3>
-                    <p>Active now</p>
+                    <h3>{showUser.user?.username}</h3>
+                    {users.some(user => user?.userId ===showUser.user?._id) ?(
+                                  <p>Active now</p>
+                             ): <p>Offline</p>}
+                  
                     </div>
                 </div>
                 
             </div>
                     </div>
+                    <div className="chatContent">
+                       
+                        {messages.map((msg)=>(
+                            <div className={msg.fromSelf ? "reciever" : "sender"}>
+                            { !msg.fromSelf  ?(<img src="/uploads/unknown.jpg"/>):null}
+                            <div>
+                                <span></span>
+                                <div ref={scrollRef}>
+                                    {msg.message} 
+                                </div>
+                            </div>
+                        </div>
+                        
+                                 ))}
+                         {waitingMessage ? (
+                            <div className="loadingMessage">
+                                <img src="/uploads/unknown.jpg"/>
+                                <div>
+                                <div id="loading-bubble">
+                                    <div class="spinner">
+                                        <div class="bounce1"></div>
+                                        <div class="bounce2"></div>
+                                        <div class="bounce3"></div>
+                                    </div>
+                                </div>
+                                <span></span>
+                                </div>
+                            </div>
+                            
+                           
+
+                            
+                         ):null} 
+                  
+                    </div>
+                    <div className="addChat">
+                        <div>
+                             <input type="text" value={message}onChange={(e)=>{
+                                setMessage(e.target.value) 
+                                if (socket) {
+                                socket.emit("sending-message", {
+                                    to: showUser.user?._id,
+                                });
+                            }
+                            }}/>
+                         
+
+                            <IoIosSend className="sendIcon" onClick={hundleSendMessage} /> 
+
+                        </div>
+                        </div>
                     </div>
                 ):null}
                 
@@ -179,54 +237,3 @@ export default function Chat({socket}){
                 </div>
     )
 }
- 
-            //     {showUser ? (
-            //         <div className="chatBar col-12 col-md-8 ">                    
-            //         <div className={showUser? "chatNavBar" :"chatNavBar chatNavBarHidden" }>
-            //                 <ion-icon name="arrow-back-outline" onClick={()=>setShowUser(false)}></ion-icon>
-                            
-            //             <div className="message-person ">
-            //                 <div className="profile-img-friends ">
-            //                         <img src={`/${showUser.user?.profileImg}`} alt=""/>
-            //                 </div>
-            //                 <div className="message-info"> 
-            //                     <b>{showUser.user?.username}</b> <br/> <small> wake up brooo !!!!</small>
-            //                 </div>
-            //             </div>
-            //         </div>
-            //         <div className="chatBar-content">
-            //                 <div className="discussion">
-
-            //                     {messages.map((msg)=>(
-            //                         <div className={msg.fromSelf ? "reciever" : "sender"} ref={scrollRef}>
-            //                             {/* <img src={`/${showUser.user?.profileImg}`}/> */}
-                                        
-                                        
-            //                             <div>{msg.message}</div>
-                                        
-            //                         </div>
-            //                     ))}
-            //                     {waitingMessage ? (
-            //                         <div className= "sender">
-            //                             <p>...</p>
-            //                         </div>
-            //                         ):null}
-            //                 </div>
-            //         </div>
-            //             <div className="addChat">
-            //                 <input type="text" value={message}onChange={(e)=>{
-            //                     setMessage(e.target.value) 
-            //                     if (socket) {
-            //                     socket.emit("sending-message", {
-            //                         to: showUser.user?._id,
-            //                     });
-            //                 }
-            //                 }}/>
-            //                 <img src={send} alt="addcomment" className="imgSendMessage" onClick={hundleSendMessage}/>
-                            
-            //             </div>
-            //     </div>
-            //     ):null}
-                
-            // </div>
-            
