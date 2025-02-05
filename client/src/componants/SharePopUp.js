@@ -7,7 +7,7 @@ export default function SharePopUp(props){
     }
     
     const generateLink =()=>{
-        return `https://social-media-2-o8uj.onrender.com/post/${props.postId}`
+        return `https://social-media-xd1j.onrender.com/post/${props.postId}`
     }
     return (props.trigger)?(
         <div className="popUp">

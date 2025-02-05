@@ -10,7 +10,7 @@ const { Server } = require("socket.io");
 const { requireAuth } = require('./middlewares/auth');
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'https://social-media-2-o8uj.onrender.com'],
+    origin: ['http://localhost:3000', 'http://localhost:3001', 'https://social-media-xd1j.onrender.com'],
     credentials: true 
 }));
 app.use(cookieParser());
@@ -66,7 +66,7 @@ const io = new Server(server, {
         origin: [
             "http://localhost:3000",
             "http://localhost:3001",
-            "https://social-media-2-o8uj.onrender.com"
+            "https://social-media-xd1j.onrender.com"
         ],
         credentials: true,
     },
