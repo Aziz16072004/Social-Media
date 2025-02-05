@@ -16,6 +16,9 @@ body *{
     --color-white: /*hsl(252, 30%, var(--white-color-lightness))*/ white;
     --color-light: hsl(252, 30%, var(--light-color-lightness));
     --color-dark:  /*hsl(252, 30%, var(--dark-color-lightness)) */ black; 
+    --big-size:30px;
+    --medium-size:20px;
+    --small-size:14px;
 }
 .green{
     --main-color:#4de69e;
@@ -59,6 +62,10 @@ body *{
 
     padding: 0 !important;
     text-align: center;
+
+}
+h2{
+    font-size: clamp(1.5rem, 5vw, 2rem); 
 
 }
 .searcheBar div {
@@ -887,6 +894,14 @@ main{
 .img-post img{
     margin: 15px 0px 0 20px;
 }
+.loadingaAddingPost{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    height: 50vh;
+}
 .postes-images-post{
         border-radius: 15px;
         height: 400px;
@@ -943,9 +958,13 @@ main{
 }
 }
 @media (max-width: 1400px){
+    /* body{
+        --big-size:20px;
+    } */
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 1410px !important;
     }
+    
     .sender > div {
 
         width: 75% !important;
@@ -1798,10 +1817,10 @@ font-size: 20px ;
     display: flex;
     justify-content: space-between;
 }
-.userContainer button:hover{
+.userContainer button:hover,.Logoutbutton:hover{
     background-color: #F44336;
 }
-.userContainer button{
+.userContainer button ,.Logoutbutton{
     border: none;
     padding: 0 20px;
     height: 40px;

@@ -1,65 +1,40 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const bucket = require('../config/firebaseConfig'); 
+require("dotenv").config()
+const cloudinary = require('../config/cloudinary');
 
 const uploadPost = async (req, res) => {
     try {
-        const file = req.file;
-        if (!file) {
-          return res.status(400).send({ success: false, message: 'No file uploaded.' });
+        if (!req.file) {
+            return res.status(400).json({ error: 'No file uploaded' });
         }
-    
-        // Generate file name with timestamp
-        const timestamp = Date.now();
-        const fileName = `uploads/${timestamp}-${file.originalname}`;
-        const blob = bucket.file(fileName);
-    
-        // Create a stream to upload the file to Firebase
-        const blobStream = blob.createWriteStream({
-          metadata: {
-            contentType: file.mimetype,
-          },
-        });
-    
-        const imageUploadPromise = new Promise((resolve, reject) => {
-          blobStream.on('error', (err) => {
-            console.error('Error during upload:', err);
-            reject(err);
-          });
-    
-          blobStream.on('finish', () => {
-            // Generate the public URL for the uploaded file
-            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileName)}?alt=media`;
-            resolve(publicUrl);
-          });
-    
-          blobStream.end(file.buffer);
-        });
-    
-        // Wait for the upload to finish and get the public URL
-        const imageUrl = await imageUploadPromise;
-    
-        // Example: Save post data to database (using MongoDB or your preferred database)
-        const newPost = new Post({
-          name: req.body.name,
-          image: imageUrl, 
-          userId: req.body.userId,
-        });
-        const savedPost = await newPost.save();
-        await savedPost.populate({
-          path: 'userId',
-          select: 'name email',
-        });
-    
-        res.status(200).json({
-          success: true,
-          message: 'File uploaded successfully!',
-          post: savedPost,
-        });
-      } catch (error) {
-        console.error('Error in upload:', error);
-        res.status(500).send({ success: false, message: 'Failed to upload file.' });
-      }
+
+        cloudinary.uploader.upload_stream({ resource_type: 'image' }, async (error, uploadedFile) => {
+            if (error) {
+                return res.status(500).json({ error: 'Upload failed' });
+            }
+            const newPost = new Post({
+                name: req.body.name,
+                image: uploadedFile.secure_url, 
+                userId: req.body.userId,
+            });
+            const savedPost = await newPost.save();
+            await savedPost.populate({
+                path: 'userId',
+                select: 'username profileImg _id',
+            });
+
+            res.status(200).json({
+                success: true,
+                message: 'File uploaded successfully!',
+                post: savedPost,
+            });
+        }).end(req.file.buffer); 
+        
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 const showPost = async (req,res) =>{

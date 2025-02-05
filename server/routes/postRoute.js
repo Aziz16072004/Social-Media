@@ -3,7 +3,6 @@ const router = express.Router()
 const postController  = require('../controller/postController')
 const multer = require('multer');
 
-// const upload = require("../middlewares/postImg");
 const upload = multer();
 router.post("/upload" ,upload.single('image'),postController.uploadPost)
 router.get("/" , postController.getPosts)

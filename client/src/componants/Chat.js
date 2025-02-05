@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react"
 import { useNavigate, useParams} from "react-router-dom"
 import axios from "../axios"
+import Cookies from 'js-cookie';
+
 import { IoSearchSharp } from "react-icons/io5";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
@@ -162,7 +164,8 @@ export default function Chat({socket}){
                 </div>
                 </div>
                 <button onClick={()=>{
-                    localStorage.clear();
+                    Cookies.remove('jwt');
+                    localStorage.removeItem("user")
                     navigate("/");
                 }
                 }>Logout</button>

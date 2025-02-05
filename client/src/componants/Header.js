@@ -53,12 +53,12 @@ return(
 
     <div className="container" >
         <header className="row d-sm-flex justify-content-between" >
-            <div className="logo col-8 col-md-4 text-center ">
+            <div className="logo col-6 col-md-4 text-center ">
                 <h2>Social Media</h2>
             </div>
-            <div className="searche  d-none col-md-5 d-md-flex col-6 text-center" >
+            <div className="searche   col-md-5 d-md-flex col-1 text-center" >
                 <img src={searcheImg} alt="" className="searcheImg"/>
-                <input type="text"  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
+                <input type="text" className="d-none d-md-block"  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
                 {showSearchingBar ? (
                     <div className="searchingBar">
                     <ion-icon name="close-outline" onClick={(e) => { e.stopPropagation(); setShowSearchingBar(false); }}></ion-icon>
@@ -78,8 +78,8 @@ return(
                    
                 </div>):null}
             </div>
-            <div className="header-rigth col-4 col-sm-3  text-center">
-                <button onClick={()=>{deconnection()}} className="button">Create</button>
+            <div className="header-rigth col-5 col-sm-3  text-center">
+                <button onClick={()=>{deconnection()}} className="Logoutbutton">Log Out</button>
             </div>
         </header>
         </div>

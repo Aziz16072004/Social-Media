@@ -2,7 +2,7 @@ import { useState , useEffect, useRef } from "react"
 import * as React from 'react';
 import {Link} from "react-router-dom"
 import axios from "../axios"
-
+import CircularProgress from '@mui/material/CircularProgress';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -23,6 +23,8 @@ import LoadingPost from "./LoadingPost";
 export default function HomeSection({theme}) {
   const [loading, setLoading] = useState(true);
     const [postWidget, setPostWidget] = useState(false);
+    const [loadAddingPost, setLoadAddingPost] = useState(false);
+
     const [postName, setPostName] = useState("");
     const [postImage, setPostImage] = useState(null);
     const [posts, setPosts] = useState([]);
@@ -116,6 +118,7 @@ export default function HomeSection({theme}) {
       setPostImage(e.target.files[0]);
     };
     const handleSubmit = async (e) => {
+      setLoadAddingPost(true)
       e.preventDefault();
       const formData = new FormData();
       formData.append('name', postName);
@@ -123,11 +126,16 @@ export default function HomeSection({theme}) {
       formData.append('userId', data._id);
       try {
         const response = await axios.post("/posts/upload", formData,{withCredentials: true });
-        // console.log(response);
+        console.log(response.data);
         
-        setPosts(prevPosts => [response.data,...prevPosts]);
+        setPosts(prevPosts => [response.data.post,...prevPosts]);
       } catch (error) {
         console.error('Error uploading Post:', error);
+      }
+      finally{
+        
+        setLoadAddingPost(false);
+        setPostWidget(false)
       }
     }
     function formatPostDate(createdAt) {
@@ -168,62 +176,72 @@ export default function HomeSection({theme}) {
     
     return (
         <>
-         {postWidget ? (
-          <div className="change row">
-           
-        
-          <div className="container col-10 col-md-8 my-auto col-lg-6">
-            <div className="createdPostHeader w-100">
-              <div className="createdPostHeaderName text-align-center">
-                <h3>Create Post </h3>
-              </div>
-              <div className="exite-btn">
-                <ion-icon name="close-outline" onClick={()=>{setPostWidget(false)}}></ion-icon>
-              </div>
+{postWidget && (
+  <div className="change row">
+    <div className="container col-10 col-md-8 my-auto col-lg-6">
+      {loadAddingPost ? (
+        <div className="loadingaAddingPost">
+                <CircularProgress size="3rem" />
+                <p>Uploading your post...</p>
+
+
+        </div>
+      ) : (
+        <>
+          <div className="createdPostHeader w-100">
+            <div className="createdPostHeaderName text-align-center">
+              <h3>Create Post</h3>
             </div>
-            <div className="userPost row"> 
-              <img src={`/${data.profileImg}`} className="col-2" alt=""/>
-              <div className="col-10">
-                <h4>{data.username}</h4>
-                <p>{data.email}</p>
-              </div>
+            <div className="exite-btn">
+              <ion-icon name="close-outline" onClick={() => setPostWidget(false)}></ion-icon>
             </div>
+          </div>
+
+          <div className="userPost row">
+            <img src={`/${data.profileImg}`} className="col-2" alt="" />
+            <div className="col-10">
+              <h4>{data.username}</h4>
+              <p>{data.email}</p>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit}>
-            <div className="formContent ">
-              <div className="w-100">  
-                <input type="text" placeholder="Qoui de noeuf aziz ?" onChange={(e)=>setPostName(e.target.value)}/> 
+            <div className="formContent">
+              <div className="w-100">
+                <input type="text" placeholder="Quoi de neuf Aziz ?" onChange={(e) => setPostName(e.target.value)} />
               </div>
-              
-          <div className="addPostImage">
-            <div className="w-100 albums" onClick={()=>{handleClick()}}>
-            {postImage ? 
-            
-            (<img src={URL.createObjectURL(postImage)} alt=""/>)
-            : (<div>
-              <ion-icon name="albums-outline"></ion-icon>
-              <p>Add pictures or videos</p>      
-              </div>)}
-          </div>
-          </div>
 
-            <p className="d-none">
-            <label>Select Image:</label>
-            <input type="file" accept="image/*" ref={fileInputRef} onChange={handleImageChange }/>
-            </p>
-          <div>
-            {postImage && postName !== "" ?(
+              <div className="addPostImage">
+                <div className="w-100 albums" onClick={handleClick}>
+                  {postImage ? (
+                    <img src={URL.createObjectURL(postImage)} alt="" />
+                  ) : (
+                    <div>
+                      <ion-icon name="albums-outline"></ion-icon>
+                      <p>Add pictures or videos</p>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-              <input type="submit" className="submit-btn" value="Save Post"  onClick={()=>{setPostWidget(true)}}/> 
-              ):  <input type="submit" className="submit-btn dontsubmit" value="Save Post"/> }
-            
-          
-          </div>
+              {/* Hidden File Input */}
+              <input type="file" accept="image/*" ref={fileInputRef} className="d-none" onChange={handleImageChange} />
+
+              <div>
+                {postImage && postName !== "" ? (
+                  <input type="submit" className="submit-btn" value="Save Post" />
+                ) : (
+                  <input type="reset" className="submit-btn dontsubmit" value="Save Post" disabled />
+                )}
+              </div>
             </div>
-            </form>
-            </div>
-          </div>
-          ):null
-        } 
+          </form>
+        </>
+      )}
+    </div>
+  </div>
+)}
+
         <div className="acceuil col-12 col-md-9 col-lg-6">
          
 
