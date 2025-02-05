@@ -22,7 +22,7 @@ function Login() {
     
     
     try {
-      const res = await axios.post("https://social-media-2-o8uj.onrender.com/api/auth/signin", {
+      const res = await axios.post("/auth/signin", {
         email: data.email,
         password: data.password
       });
