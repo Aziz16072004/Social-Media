@@ -35,7 +35,7 @@ export default function Bookmarks(){
       
         const yearDiff = currentDate.getFullYear() - postDate.getFullYear();
         const monthDiff = currentDate.getMonth() - postDate.getMonth();
-        const dayDiff = currentDatde.getDate() - postDate.getDate();
+        const dayDiff = currentDate.getDate() - postDate.getDate();
       
         if (yearDiff > 0) {
           return `${yearDiff === 1 ? 'year' : 'years'} ago`;
