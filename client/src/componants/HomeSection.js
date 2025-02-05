@@ -244,7 +244,7 @@ export default function HomeSection({theme}) {
         <div className="section2">
           <SharePopUp data={data} postId={selectedItem} trigger={sharePopUp} setTrigger={setSharePopUp}/>
           {loading ? (
-      <LoadingPost/> // Or replace with a spinner component
+            <LoadingPost/>
     ) : (
          posts.map((post)=>{
              const createdAt = formatPostDate(post.createdAt)
