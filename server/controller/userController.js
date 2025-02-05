@@ -154,6 +154,9 @@ const acceptfriend = async (req, res) => {
     try {
         const userReceipent = await userSchema.findById(data.recipient);
         const userSender = await userSchema.findById(data.sender).select('-postMarkes -__v -password -requests')
+       console.log("userReceipent"+userReceipent);
+       console.log("userSender"+userSender);
+
        
         if (!userReceipent) {
             return res.status(404).json({ error: 'Recipient not found' });
@@ -218,6 +221,30 @@ const rejectfriend = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+const deletefriend = async (req, res) => {
+    const data = {
+        user1: req.body.user1,
+        user2: req.body.user2
+    };
+    try {
+        const user1 = await userSchema.findById(data.user1);
+        const user2 = await userSchema.findById(data.user2)
+        if (!user1) {
+            return res.status(404).json({ error: 'user not found' });
+        }
+        if (!user2) {
+            return res.status(404).json({ error: 'user not found' });
+        }
+        res.json("reject friend successfuly");        
+        user1.friends = user1.friends.filter((friend) => friend.user.toString() !== data.user2); 
+        user2.friends = user2.friends.filter((friend) => friend.user.toString() !== data.user1); 
+        await user1.save();
+        await user2.save();
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
 const postMarkes=  async (req,res) =>{
     const id = req.params.id
     try {
@@ -275,4 +302,4 @@ const updateUser =  async (req, res) => {
 }
 
 
-module.exports = {Add_InsertUser,checkUser,postMarkes , updateUser , getUser , getAllUsers,getOneUser,addFriend,acceptfriend,rejectfriend }
+module.exports = {Add_InsertUser,deletefriend,checkUser,postMarkes , updateUser , getUser , getAllUsers,getOneUser,addFriend,acceptfriend,rejectfriend }

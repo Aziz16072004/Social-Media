@@ -9,7 +9,6 @@ const app = express();
 const { Server } = require("socket.io");
 const { requireAuth } = require('./middlewares/auth');
 
-// Middleware Setup
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001', 'https://social-media-2-o8uj.onrender.com'],
     credentials: true 

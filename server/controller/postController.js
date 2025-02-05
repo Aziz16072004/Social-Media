@@ -6,65 +6,60 @@ const uploadPost = async (req, res) => {
     try {
         const file = req.file;
         if (!file) {
-            return res.status(400).send({ success: false, message: 'No file uploaded.' });
+          return res.status(400).send({ success: false, message: 'No file uploaded.' });
         }
-
+    
+        // Generate file name with timestamp
         const timestamp = Date.now();
         const fileName = `uploads/${timestamp}-${file.originalname}`;
         const blob = bucket.file(fileName);
-
+    
+        // Create a stream to upload the file to Firebase
         const blobStream = blob.createWriteStream({
-            metadata: {
-                contentType: file.mimetype,
-            },
+          metadata: {
+            contentType: file.mimetype,
+          },
         });
-
-        // Create a promise to handle image upload
+    
         const imageUploadPromise = new Promise((resolve, reject) => {
-            // blobStream.on('error', (err) => {
-            //     console.error('Error during upload:', err);
-            //     reject(err); // Reject the promise on error
-            // });
-
-            blobStream.on('finish', () => {
-                const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileName)}?alt=media`;
-                resolve(publicUrl); 
-            });
-
-            blobStream.end(file.buffer);
+          blobStream.on('error', (err) => {
+            console.error('Error during upload:', err);
+            reject(err);
+          });
+    
+          blobStream.on('finish', () => {
+            // Generate the public URL for the uploaded file
+            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(fileName)}?alt=media`;
+            resolve(publicUrl);
+          });
+    
+          blobStream.end(file.buffer);
         });
-
-        // Now, save the post to the database
-        const newPost = new Post({
-            name: req.body.name,
-            image: '',  // Temporarily set as empty
-            userId: req.body.userId,
-        });
-
-        const savedPost = await newPost.save();
-
-        // Wait for the image upload to finish and then update the post with the image URL
+    
+        // Wait for the upload to finish and get the public URL
         const imageUrl = await imageUploadPromise;
-
-        // Update the post with the Firebase URL
-        savedPost.image = imageUrl;
-
-        // Save the updated post
-        await savedPost.save();
-
-        // Populate the userId and send the response
-        await savedPost.populate({
-            path: 'userId',
-            model: 'User',
+    
+        // Example: Save post data to database (using MongoDB or your preferred database)
+        const newPost = new Post({
+          name: req.body.name,
+          image: imageUrl, 
+          userId: req.body.userId,
         });
-
-        res.status(201).send({ success: true, data: savedPost });
-        console.log("Post uploaded and saved successfully");
-
-    } catch (error) {
-        console.error('Error uploading post:', error);
-        res.status(500).send({ success: false, message: error.message });
-    }
+        const savedPost = await newPost.save();
+        await savedPost.populate({
+          path: 'userId',
+          select: 'name email',
+        });
+    
+        res.status(200).json({
+          success: true,
+          message: 'File uploaded successfully!',
+          post: savedPost,
+        });
+      } catch (error) {
+        console.error('Error in upload:', error);
+        res.status(500).send({ success: false, message: 'Failed to upload file.' });
+      }
 };
 
 const showPost = async (req,res) =>{

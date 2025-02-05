@@ -1,8 +1,11 @@
 const express = require("express")
 const router = express.Router()
 const postController  = require('../controller/postController')
-const upload = require("../middlewares/postImg");
-router.post("/upload" ,upload,postController.uploadPost)
+const multer = require('multer');
+
+// const upload = require("../middlewares/postImg");
+const upload = multer();
+router.post("/upload" ,upload.single('image'),postController.uploadPost)
 router.get("/" , postController.getPosts)
 router.post("/addRate" , postController.addRate)
 router.get("/showPost" , postController.showPost)

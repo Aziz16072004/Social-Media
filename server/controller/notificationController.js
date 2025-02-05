@@ -39,7 +39,7 @@ const getNotifications = async (req, res) => {
     }).populate({
         path : "sender",
         model : "User" ,
-        select : "username profileImg -_id"
+        select : "username profileImg _id"
     }).sort({ createdAt: -1 });
 
     res.json(notifications);

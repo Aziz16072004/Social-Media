@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef } from "react"
-import { useParams ,Link} from "react-router-dom"
+import { useNavigate, useParams} from "react-router-dom"
 import axios from "../axios"
 import { IoSearchSharp } from "react-icons/io5";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
-
 export default function Chat({socket}){  
+    const navigate = useNavigate();
+    const [lastMessages, setLastMessages] = useState({});
+
     const {id1} = useParams()
     const {id2} = useParams()
     const [friends , setFriends] = useState([])
@@ -17,6 +19,10 @@ export default function Chat({socket}){
     const [users , setUsers] = useState([])
     const scrollRef = useRef()
     
+
+
+   
+
     useEffect(() => {
         if (socket) {
             socket.emit('add-user', id1);
@@ -107,6 +113,29 @@ export default function Chat({socket}){
                     setShowUser({user : res2.data})
                 }
                 setFriends(res.data.friends)
+                //here i should define the last messages 
+
+                const fetchData = async() =>{
+                    const newLastMessages = [];
+                    await Promise.all(
+                    res.data.friends.map(async (friend) => {
+                        try {
+                        const lastMsgResponse = await axios.get(
+                            `/message/getLastMsg/?from=${id1}&to=${friend.user?._id}`,{withCredentials: true }
+                        );
+                        const lastMessage = lastMsgResponse.data;
+                        newLastMessages[friend.user?._id] = lastMessage;
+    
+                        } catch (error) {
+                        console.error(`Error fetching last message for ${friend.user?.username}:`, error);
+                        }
+                    })
+                    );
+                setLastMessages(newLastMessages);
+    
+                
+            }
+            fetchData()
             }catch(err){
                 console.log(err);
             }
@@ -132,7 +161,11 @@ export default function Chat({socket}){
                
                 </div>
                 </div>
-                <button>Logout</button>
+                <button onClick={()=>{
+                    localStorage.clear();
+                    navigate("/");
+                }
+                }>Logout</button>
             </div>
             <hr/>
                     <div>
@@ -148,7 +181,7 @@ export default function Chat({socket}){
                             <img src="/uploads/unknown.jpg"/>
                             <div>
                             <h3>{friend.user?.username}</h3>
-                            <p>you : Chat will be sent to that us Chat will be sent to that us </p>
+                            <p>{lastMessages[friend.user?._id]} </p>
                             </div>
                         </div>
                         {users.some(user => user?.userId ===friend.user?._id) ?(
@@ -231,7 +264,13 @@ export default function Chat({socket}){
                         </div>
                         </div>
                     </div>
-                ):null}
+                ):<div className="selectingFriendChat">
+                        <div>
+                            <h1>Welcom to Social Media Chat</h1>
+                            <h2>Select a conversation from the sidebar to start chatting</h2>
+                        </div>
+                    </div>
+                    }
                 
            </div>
                 </div>

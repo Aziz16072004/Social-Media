@@ -19,8 +19,9 @@ import ribbon from "../imgs/ribbon.png"
 import bookmark from "../imgs/bookmark.png"
 import Stories from "./Stories"
 import SharePopUp from "./SharePopUp";
+import LoadingPost from "./LoadingPost";
 export default function HomeSection({theme}) {
-    
+  const [loading, setLoading] = useState(true);
     const [postWidget, setPostWidget] = useState(false);
     const [postName, setPostName] = useState("");
     const [postImage, setPostImage] = useState(null);
@@ -151,11 +152,15 @@ export default function HomeSection({theme}) {
         setData(JSON.parse(userData));
       }
       const fetchProducts = async () => {
+        setLoading(true);
         try {
           const response = await axios.get("/posts",{ withCredentials: true });
           setPosts(response.data);
       } catch (error) {
           console.error('Error fetching posts:', error);
+      }
+      finally {
+        setLoading(false); 
       }
   };
   fetchProducts();
@@ -238,7 +243,10 @@ export default function HomeSection({theme}) {
         </div>
         <div className="section2">
           <SharePopUp data={data} postId={selectedItem} trigger={sharePopUp} setTrigger={setSharePopUp}/>
-         {posts.map((post)=>{
+          {loading ? (
+      <LoadingPost/> // Or replace with a spinner component
+    ) : (
+         posts.map((post)=>{
              const createdAt = formatPostDate(post.createdAt)
             return(
                 <div className="posts" key={post._id}>
@@ -437,7 +445,7 @@ export default function HomeSection({theme}) {
                 </div>
               </div>
             </div>)
-         })}
+         }))}
          <div>
             
         </div>

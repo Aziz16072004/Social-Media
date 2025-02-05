@@ -85,8 +85,7 @@ export default function Friends({socket , users}){
                     }
                 })
                 );
-
-setLastMessages(newLastMessages);
+            setLastMessages(newLastMessages);
 
             } catch (error) {
                 console.log(error);

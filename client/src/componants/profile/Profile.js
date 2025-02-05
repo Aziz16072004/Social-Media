@@ -7,6 +7,9 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SharePopUp from "../SharePopUp";
+import FriendButton from "./FriendButton";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Profile({ socket }) {
     const [userData, setUserData] = useState(null);
@@ -35,6 +38,25 @@ export default function Profile({ socket }) {
       }
   };
   
+  const acceptFriend = async (req)=>{
+    try {
+        
+        const res = await axios.post("/user/acceptfriend", {recipient : dataStoraged._id, sender :req._id,withCredentials: true })
+        console.log(res.data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+const rejectFriend = async (req)=>{
+    try {
+        await axios.delete("/user/rejectfriend", {
+            data: { recipient: userData._id, sender: req.user?._id },withCredentials: true 
+          })
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
     const handleClose = async (item) => {
         setOptionSelected(item);
         try {
@@ -97,18 +119,19 @@ export default function Profile({ socket }) {
                 const res = await axios.get(`/home/getOneUser/${id}`, { withCredentials: true });
                 const res2 = await axios.get(`/posts/showPostJustForProfile?userId=${id}`, { withCredentials: true });
                 setUserData(res.data);
-                console.log(res.data);
+                // console.log("this is user Profile",res.data);
                 setPosts(res2.data);
             } catch (error) {
                 navigate("/");
             }
         };
-        setDataStoraged(JSON.parse(localStorage.getItem('user')));
+        setDataStoraged(JSON.parse(localStorage.getItem('user')));        
         fetchData();
     }, []);
 
     return (
         <>
+        <ToastContainer /> 
             {userData ? (
                 <>
                     {postWidget ? (
@@ -171,19 +194,11 @@ export default function Profile({ socket }) {
                                 <div className="profileInfo row my-3 mx-auto justify-content-center align-items-center">
                                     <p className="col-md-5 col-4 mx-auto">{userData.username}</p>
                                     <div className="col-md-5 col-5">
-                                        {userData._id === dataStoraged._id ? (
-                                            <Link to={`/setting/${userData._id}`} className="btn">modify profile</Link>
-                                        ) : (
-                                            userData.friends.some((friend) => friend.user === dataStoraged._id) ? (
-                                                <button className="btn button w-100 w-md-50 text-left btn-friend">friend</button>
-                                            ) : (
-                                                userData.requests.some((req) => req.user === dataStoraged._id) ? (
-                                                    <button className="btn button w-100 w-md-50 text-left btn-sended">sended</button>
-                                                ) : (
-                                                    <button className="btn button w-100 w-md-50 text-left" onClick={addFriend}>add friend</button>
-                                                )
-                                            )
-                                        )}
+                                    <FriendButton userData={userData} 
+                                    dataStoraged={dataStoraged} 
+                                    acceptFriend={acceptFriend} 
+                                    rejectFriend={rejectFriend} 
+                                    addFriend={addFriend}  />
                                     </div>
                                 </div>
                                 <div className="row postInfo">

@@ -39,7 +39,8 @@ body *{
 .darkMode{
     --main-background-color : hsl(252, 30%, var(--light-color-lightness));
     --color-white: hsl(252, 30%, var(--white-color-lightness));
-    --color-dark:  hsl(252, 30%, var(--dark-color-lightness)) 
+    --color-dark:  hsl(252, 30%, var(--dark-color-lightness)) ;
+    --color-white-shadow: hsl(252, 30%, var(--white-color-lightness))
 }
 
 .blackMode{
@@ -916,11 +917,24 @@ main{
     width: 100%;
     border: none;
 }
-
+.selectingFriendChat{
+    display: none !important;
+}
 .serachePerson button {
     width: auto;
 }
+.selectingFriendChat div{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 
+}
+.selectedFriend , .selectingFriendChat {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+}
 
 /* MEDIA QUERY /// WEB CITE RESPNSIVE ON TABLETTE */
 @media (min-width: 1400px){
@@ -941,6 +955,43 @@ main{
     }
 }
 
+@media (min-width: 1000px){
+    .selectingFriendChat h2{
+        font-size: 16px;
+    }   
+    .selectingFriendChat h1{
+        font-size: 30px;
+    }
+    .selectingFriendChat{
+        box-shadow: 1px 4px 20px 20px var(--color-white-shadow);
+        display: flex !important;
+        min-height: 90vh;
+        background-color: var(--color-white);
+        width: 90vw;
+        border-radius: 15px;
+        font-size: 17px;
+    }
+    .messangerBody{
+        display: flex;
+        justify-content: center;
+    }
+    .messanger{
+        width: 40% !important;
+    }
+    .selectedFriend{
+        width: 60% !important;
+    }
+    .messangerContainer{
+        width: 92vw;
+    }
+}
+
+@media (max-width: 1000px){
+    .friendsBarHidden{
+        display: none;
+    }
+
+}
 @media (max-width: 768px){
     .logo h2{
         text-align: left;
@@ -967,6 +1018,16 @@ main{
         height: auto;
         padding: 0;
     }
+    .home ion-icon{
+        margin: 0;
+    }
+    .notifiIcon {
+        display: flex
+        ;
+    }
+    .notifiIcon ion-icon{
+        margin: 0 !important;
+    }
     .controle-bar .profile-bar{
         border-radius: 0px 0px 0px 15px;
     }
@@ -989,9 +1050,7 @@ main{
         height: 70px;
     }
    
-    .friendsBarHidden{
-        display: none;
-    }
+    
     .chatNavBarHidden{
         display: none;
     }
@@ -1074,6 +1133,7 @@ main{
     padding: 4px 16px;
     border-radius: 19px;
 }
+
 .imgSendMessage{
     width: 40px;
     height: 30px;
@@ -1668,6 +1728,7 @@ font-size: 20px ;
     justify-content: center;
     border-bottom: 1px solid white;
 }
+
 .sharePopUpBody button{
     padding: 5px 10px ;
     color: var(--main-color);
@@ -1695,31 +1756,29 @@ font-size: 20px ;
     cursor: pointer;
 }
 .messangerBody{
-    background-color: #F7F7F7;
+    background-color: var(--main-background-color);
 }
 .messangerContainer{
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    gap: 29px;
 }
 
 .messanger{
     min-height: 90vh;
-    background-color: white;
+    background-color: var(--color-white);
     border-radius: 15px;
-    box-shadow: 1px 4px 20px 20px #efefef;
-    overflow-y: scroll;
+    box-shadow: 1px 4px 20px 20px var(--color-white-shadow);
     width: 90vw;
     padding: 25px 35px;
 }
 .selectedFriend{
-    box-shadow: 1px 4px 20px 20px #efefef;
+    box-shadow: 1px 4px 20px 20px var(--color-white-shadow);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
     min-height: 90vh;
-    background-color: white;
+    background-color: var(--color-white);
     width: 90vw;
     border-radius: 15px;
    
@@ -1739,6 +1798,9 @@ font-size: 20px ;
     display: flex;
     justify-content: space-between;
 }
+.userContainer button:hover{
+    background-color: #F44336;
+}
 .userContainer button{
     border: none;
     padding: 0 20px;
@@ -1746,8 +1808,13 @@ font-size: 20px ;
     border-radius: 10px;
     background-color: #353436;
     color: white;
+    transition: .5s;
     font-weight: 500;
     
+}
+.friendUser{
+    display: flex;
+    gap: 10px;
 }
 .messangerContainer h3{
     font-size: 17px;
@@ -1756,7 +1823,7 @@ font-size: 20px ;
 .friendsContainer >div p{
     font-size: 14px;
     font-weight: bold;
-    color: rgb(50, 35, 33);
+    color: #858585;;
 }
 .messanger input:focus{
     outline: none;
@@ -1766,6 +1833,7 @@ font-size: 20px ;
     border: none;
     font-weight: 600;
     margin-bottom: 10px;
+    background: var(--color-white);
     
 }
 .messanger .searchIcon{
@@ -1775,7 +1843,7 @@ font-size: 20px ;
 }
 .friendsContainer {
     max-height: 70vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .friendsContainer > div{
     margin: 20px 0;
@@ -1815,7 +1883,7 @@ font-size: 20px ;
     padding: 11px 14px;
     width: 100%;
     overflow-y: auto;
-    background-color: #F7F7F7;
+    background-color: var(--color-white);
   }
   .friendsContainer .userContainer p {
    max-width: 250px;
@@ -1828,8 +1896,8 @@ font-size: 20px ;
     align-items: center;
     gap: 10px;
   }
-  .selectedFriend .messanger .backArrow{
-    font-size: 25px;
+  .backArrow{
+    font-size: 23px;
     font-weight: 600;
     cursor: pointer;
   }
@@ -1891,24 +1959,74 @@ font-size: 20px ;
     background-color: var(--main-color);
     
 }
-
 #loading-bubble.grey {
     background-color: #a5b0b5;
 }
-
-
-
-
 #loading-bubble .spinner {
     position: static !important;
     margin-top: -11px;
     margin-left: 0px;
 }
-
 #loading-bubble .spinner div {
     background-color: #fff;
 }
 
+/* notification style */
+.notification-wrapper {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 300px;
+}
 
+.notification-item {
+    box-shadow: 0 0 10px rgba(0,0,0, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    animation: SlideLeft 0.4s;
+    animation-fill-mode: forwards;
+    width: 300px;
+}
 
+@keyframes SlideLeft {
+    0% {
+        margin-left: 120%;
+    }
 
+    100% {
+        margin-left: 0;
+    }
+}
+
+@keyframes SlideRight {
+    0% {
+        margin-left: 0;
+    }
+
+    100% {
+        margin-left: 120%;
+    }
+}
+
+.notification-item.exit {
+    animation: SlideRight 0.4s;
+    animation-fill-mode: forwards;
+}
+
+.notification-item p {
+    margin: 0;
+    padding: 10px;
+}
+
+.notification-item .bar {
+    height: 10px;
+}
+
+.notification-item.success .bar {
+    background-color: #65d266;
+}
+
+.notification-item.error .bar {
+    background-color: red;
+}
