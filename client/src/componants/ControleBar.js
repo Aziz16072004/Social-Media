@@ -184,10 +184,8 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                                 <div className={ !display ? "notification-bar" : "notification-bar notification-bar-active" }>
             
                 { notification && notification.map((notifi , i)=>{
-                    console.log(notifi.sender);
-                    
                     return(
-                        <Link to={`/profile/${notifi.sender._id}`}>
+                        <Link to={`/profile/${notifi.sender?._id}`}>
 
                     <div className={notifi.read ? "notification-person " :"notification-person notRead"} key={uuidv4()} onClick={()=>{readOneNotification(notifi._id)}} >
                         <div className="profile-img">
