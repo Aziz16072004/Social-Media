@@ -126,7 +126,9 @@ export default function Friends({socket , users}){
                         </div>
                         <div className="message-info"> 
                             <b>{friend.user?.username}</b> <br/> 
-                            <small>{lastMessages[friend.user?._id]}</small>
+                            <div>
+                                <small>{lastMessages[friend.user?._id]}</small>
+                            </div>
                           
                             
                             

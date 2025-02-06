@@ -419,6 +419,12 @@ p{
 .allStories::-webkit-scrollbar ,.chatBar-content::-webkit-scrollbar  {
     display: none;
 }
+.icons-posts button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 30px;
+}
 .img-profile-story{
     position: absolute;
     top: 0;
@@ -708,6 +714,13 @@ main{
 .show-friends{
     border-bottom: 4px solid var(--main-background-color);
 }
+.message-info div{
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+.message-info small{
+    white-space: nowrap;
+}
 .message-info{
     max-width: 64%;
 }
@@ -721,8 +734,10 @@ main{
     overflow: hidden;
    
 }
-
-.message-person small {
+.chatContent a{
+    color: white;
+}
+.message-person small ,.message-info div {
     color: #9f9f9f;
 }
 .requests-person{
@@ -1553,6 +1568,10 @@ position: relative;
 .reciever {
     max-width: 70%;
     align-self: end;
+}
+
+.reciever div{
+    width: 100%;
 }
 .reciever div div{
     position: relative;

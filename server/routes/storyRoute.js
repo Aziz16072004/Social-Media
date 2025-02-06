@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const storyController = require("../controller/storyController");
-const multer = require("multer")
+const multer = require('multer');
+
+const upload = multer();
 const fs = require("fs")
 const path = require("path");
 const { requireAuth } = require("../middlewares/auth");
@@ -20,7 +22,6 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage });
 
 router.get("/getStories", storyController.getStories);
 router.get("/getStoriesForSwipper", storyController.getStoriesForSwipper);

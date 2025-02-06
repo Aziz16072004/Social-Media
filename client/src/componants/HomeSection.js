@@ -7,6 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa";
+import { CiShare2 } from "react-icons/ci";
+import { AiOutlineComment } from "react-icons/ai";
 
 import close from "../imgs/close.png"
 import send from "../imgs/paper-plane-top.png"
@@ -327,15 +332,15 @@ export default function HomeSection({theme}) {
                         </div>
                         <div className="icons-posts">
                             <div className="icons-posts-left">
-                            <img
-                              alt=""
-                              src={post?.peopleRated?.some(rate => rate.user?._id === data?._id) ? loveColored : (theme === "blackMode" || theme === "darkMode" ? whiteLove : blackLove)}
-                              onClick={async ()=>{hundleClickLike(post)}}/>
-                              <ion-icon name="chatbubble-ellipses-outline" onClick={()=>{fetchData(post._id) ; setShowPostInformation(true) ; setShowComments(true)}}></ion-icon>
+                            <button
+                              onClick={async ()=>{hundleClickLike(post)}}>{post?.peopleRated?.some(rate => rate.user?._id === data?._id) ? <FaHeart style={{ fill: 'red',color:'red' }}/>: (theme === "blackMode" || theme === "darkMode" ? <FaRegHeart />
+                                : <FaRegHeart />) } </button>
+                              <button><AiOutlineComment name="chatbubble-ellipses-outline" onClick={()=>{fetchData(post._id) ; setShowPostInformation(true) ; setShowComments(true)}}/></button>
                   
-                              <ion-icon name="share-social-outline" onClick={()=>{setSharePopUp(true) ;setSelectedItem(post._id); }}></ion-icon>
+                              <button><CiShare2 name="share-social-outline" onClick={()=>{setSharePopUp(true) ;setSelectedItem(post._id); }}/></button>
                     </div>
-                    <div className="icons-posts-right"><img  src={data.postMarkes.some(marke => marke.post === post._id) ? bookmark : ribbon} alt="" onClick={async ()=>{
+                    <div className="icons-posts-right">
+                      <button  onClick={async ()=>{
                       try {
                         const res = await axios.post("/posts/postMarkes" , {
                           postId: post && post._id,
@@ -348,7 +353,9 @@ export default function HomeSection({theme}) {
                       } catch (error) {
                         console.log(error);
                       }
-                    }}/></div>
+                    }}> {data.postMarkes.some(marke => marke.post === post._id) ? <FaBookmark style={{fill:'gold'}}/>
+                      : <FaRegBookmark  />
+} </button></div>
                         </div>
                             <div className="vue">
                                 <div className="line1-vue">

@@ -1,15 +1,18 @@
 import { useEffect, useState, useRef } from "react"
-import { useNavigate, useParams} from "react-router-dom"
+import { Link, useNavigate, useParams} from "react-router-dom"
 import axios from "../axios"
 import Cookies from 'js-cookie';
 
 import { IoSearchSharp } from "react-icons/io5";
 import { IoMdArrowBack } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
+import LoadingFriends from "./loading/loadingFriends";
 export default function Chat({socket}){  
     const navigate = useNavigate();
     const [lastMessages, setLastMessages] = useState({});
-
+    const [data,setData] = useState({})
+    const [loadingFriends, setLoadingFriends] = useState(true);
+    
     const {id1} = useParams()
     const {id2} = useParams()
     const [friends , setFriends] = useState([])
@@ -106,9 +109,15 @@ export default function Chat({socket}){
         };
         fetchData();
     }, [showUser]);
+
     useEffect(()=>{
         const fetchData = async()=>{
+            const userData = localStorage.getItem("user");
+            if (userData) {
+              setData(JSON.parse(userData));
+            }
             try {  
+                setLoadingFriends(true)
                 const res = await axios.get(`/user/getuser/${id1}`,{withCredentials: true })
                 if (id2) {
                     const res2 = await axios.get(`/user/getuser/${id2}`,{withCredentials: true })
@@ -141,6 +150,9 @@ export default function Chat({socket}){
             }catch(err){
                 console.log(err);
             }
+            finally{
+                setLoadingFriends(false)
+            }
         }
         fetchData()
     },[])
@@ -156,7 +168,7 @@ export default function Chat({socket}){
 
                 <img src="/uploads/unknown.jpg"/>
                 <div>
-                <h3>Aziz Chaabani</h3>
+                <h3>{data?.username}</h3>
                 {users.some(user => user?.userId ===id1) ?(
                                   <p>Active now</p>
                              ): <p>offile</p>}
@@ -176,8 +188,8 @@ export default function Chat({socket}){
                         <IoSearchSharp className="searchIcon"/>
                     </div>
                 <div className="friendsContainer" >
-
-                {friends.map((friend)=>(
+                {loadingFriends?<LoadingFriends/>:
+                friends.map((friend)=>(
                     
                     <div className="userContainer" onClick={()=>{setShowUser(friend)}}>
                         <div>
@@ -223,7 +235,10 @@ export default function Chat({socket}){
                             <div>
                                 <span></span>
                                 <div ref={scrollRef}>
-                                    {msg.message} 
+                                    {msg.message.startsWith("http") || msg.message.startsWith("www.")?(
+                                        <Link to={msg.message}>{msg.message}</Link>
+                                    ):msg.message }
+                                    
                                 </div>
                             </div>
                         </div>

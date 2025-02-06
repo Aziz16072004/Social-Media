@@ -46,15 +46,15 @@ const StoriesCreate = () => {
         setStoryImage(e.target.files[0]);
         
     };
-    const uploadStorie = async () =>{
-        console.log(storyImage);
-        
+    const uploadStorie = async () =>{        
         const formData = new FormData();
         formData.append('userId', id);
         formData.append('image', storyImage);
-        console.log(formData);
+        
         try {
             const res = await axios.post("/story/addStory" , formData,{withCredentials: true })
+            console.log(res.data);
+            
             setStories(prevStories => [res.data , ...prevStories]);
         } catch (error) {
             console.log(error);

@@ -41,9 +41,9 @@ function Stories({user}) {
                 </Link>
                     {stories.length>0 && stories.map((ele , index)=>(
                         <div className="block_story story" key={index} onClick={()=>{hundleStorie(ele.lastStory.user?._id)}}>
-                            <img src={`/${ele.lastStory.image}`} className='storyImg'/>
+                            <img src={ele.lastStory.image} className='storyImg'/>
                             <div className="img-profile-story">
-                                <img src={`/${ele.lastStory.user?.profileImg}`} alt=""/>
+                                <img src={`${ele.lastStory.user?.profileImg}`} alt=""/>
                             </div>
                             <p className="story_info">{ele.lastStory.user?.username}</p>
                         </div>
@@ -53,10 +53,12 @@ function Stories({user}) {
                 (<div className='swipperStories'>
                     <div className='swipperStoriesContent'>
 
+                        {console.log(storiesContent)}
                     {storiesContent.length>0 ?
+                    
                     (<div className='swipperStoriesHeader'>
                         <div className='swipperStoriesHeaderContent profile-img'>
-                            <img src={`/${storiesContent[0].user?.profileImg}`} />
+                            <img src={storiesContent[0].user?.profileImg} />
                             <div>{storiesContent[0].user?.username}</div>
                         </div>
                         <ion-icon name="close-outline" onClick={()=>{setShowStories(false)}}></ion-icon>

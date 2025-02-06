@@ -23,7 +23,7 @@ const uploadPost = async (req, res) => {
                 path: 'userId',
                 select: 'username profileImg _id',
             });
-
+            
             res.status(200).json({
                 success: true,
                 message: 'File uploaded successfully!',

@@ -93,6 +93,8 @@ export default function Post(){
                 if (res.data) {
                     setCreatedAt(formatPostDate(res.data.createdAt));
                     setPost(res.data);
+                    console.log(res.data);
+                    
                 } else {
                     console.error('No data received from server');
                 }
@@ -187,7 +189,7 @@ export default function Post(){
                     <div className="post-title">
                             <div className="profile-img img-post">
                            
-                                <img src={`/${post.userId?.profileImg}`} alt=""/>
+                                <img src={post.userId?.profileImg} alt=""/>
                             
                                 </div>
                             <div className="post-name-utilisateur">
@@ -197,7 +199,7 @@ export default function Post(){
                         </div>
                         <div className="post-description ">{post.name}</div>
                         <div className="postes-images-post">
-                            <img src={`/${post.image}`} alt=""/>
+                            <img src={post.image} alt=""/>
                         </div>
                         <div className="icons-posts">
                             <div className="icons-posts-left">
