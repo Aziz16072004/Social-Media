@@ -213,7 +213,7 @@ const rejectFriend = async (req)=>{
                                 <div className="row">
                                     {posts.map((post) => (
                                         <div className="post col-12 col-md-6 col-lg-4" key={post._id}>
-                                            <img src={`/${post.image}`} alt="" />
+                                            <img src={post.image} alt="" />
                                             <div className="postpic__content">
                                                 <div className='row'>
                                                     <div className="col-4">

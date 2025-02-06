@@ -188,8 +188,8 @@ export default function Post(){
                 </div>
                     <div className="post-title">
                             <div className="profile-img img-post">
-                           
-                                <img src={post.userId?.profileImg} alt=""/>
+                              {console.log(post)}
+                                <img src={"/"+post.userId?.profileImg} alt=""/>
                             
                                 </div>
                             <div className="post-name-utilisateur">
