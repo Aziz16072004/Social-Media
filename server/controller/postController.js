@@ -1,6 +1,5 @@
 const Post = require("../models/post");
 const User = require("../models/user");
-const bucket = require('../config/firebaseConfig'); 
 require("dotenv").config()
 const cloudinary = require('../config/cloudinary');
 
