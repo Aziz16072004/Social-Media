@@ -67,6 +67,15 @@ body *{
     text-align: center;
 
 }
+.blackMode .logo img ,.darkMode .logo img{
+    filter: invert(100%) brightness(100%);
+
+}
+.logo img{
+    display: none;
+ 
+      
+}
 h2{
     font-size: clamp(1.5rem, 5vw, 2rem); 
 
@@ -82,14 +91,16 @@ h2{
     right: 10px;
 }
 .searche .searcheImg {
-    
     width: 17px;
     height: 17px;
     position: absolute;
     left: 23px;
+    top: 50%;
+    transform: translate(-50%, -50%);
 
 }
 .header-rigth{
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -125,6 +136,7 @@ HEADER {
     align-items: center
 }
 .searche{
+    flex-grow: 3;
     position: relative;
     align-items: center;
 }
@@ -258,7 +270,7 @@ p{
   transition-duration: .5s;
   transition-delay: .1s;
   max-height: 560px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
     z-index: 1000;
     background-color: var(--color-white);
@@ -593,8 +605,19 @@ main{
     background: var(--color-white);
     border-radius: 15px;
     position: relative;
+    height: fit-content;
 }
+.ProfileIcon{
+    font-size: 20px;
+    fill: white;
+}
+.postpic__content button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    
 
+}
 .post-name-utilisateur{
     margin: 11px 18px 2px 18px;
 }
@@ -970,7 +993,13 @@ main{
     flex-direction: column;
 }
 
-/* MEDIA QUERY /// WEB CITE RESPNSIVE ON TABLETTE */
+
+@media (max-width: 500px){
+    .container {
+        padding: 0 !important;
+
+    }
+}
 @media (min-width: 1400px){
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
     max-width: 1410px !important;
@@ -1035,8 +1064,15 @@ main{
     }
 }
 @media (max-width: 768px){
+    .logo img{
+        display: block;
+        width: 70px;
+        box-shadow: none;
+    }
     .logo h2{
-        text-align: left;
+        /* text-align: left; */
+        display: none;
+
     }
     
     .friendsBar .message-person {
@@ -1059,6 +1095,7 @@ main{
     .controle-bar .home{
         height: auto;
         padding: 0;
+        position: static;
     }
     .home ion-icon{
         margin: 0;
@@ -1098,10 +1135,11 @@ main{
     }
     .notification-bar-active  {
     padding: 14px 0px;
+    width: 100vw !important;
     position: absolute;
     bottom: 74px;
     border-radius: 28px;
-    left: auto;
+    left: 0;
     top: auto;
     display: block;
     transition-property: width;
@@ -1416,8 +1454,10 @@ position: relative;
 .post:hover .postpic__content{
     opacity: 1;
 }
-.postpic__content ion-icon{
-    font-size: 22px;
+
+.postpic__content p{
+    color: white;
+
 }
 .postpic__content {
     position: absolute;
@@ -1429,7 +1469,6 @@ position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
     opacity: 0 ;
     transition: opacity .2s ease-in-out;
     background-color: #11111168;
@@ -1624,7 +1663,7 @@ position: relative;
     right: 0 ;
 }
 .notRead {
-    background: #e9e4fa !important;
+    background: var(--main-background-color) !important;
 }
 .Storyheader ion-icon{
     color: white !important;
@@ -1703,6 +1742,9 @@ font-size: 20px ;
     position: absolute;
     right: 10px;
     bottom: 10px;
+}
+.swipperStoriesHeaderContent div{
+    color: white;
 }
 .swipperStoriesHeaderContent{
     display: flex;
@@ -1839,6 +1881,9 @@ font-size: 20px ;
     align-items: center;
     gap: 25px;
 
+}
+.logo{
+    flex-grow: 1;
 }
 .userContainer{
     display: flex;
@@ -2142,6 +2187,49 @@ font-size: 20px ;
     height: 1px;
     width: 100%;
     background: #bfb3f2;
+  }
+  .login-form .profileImg img:hover {
+    transform: scale(1);
+  }
+  .login-form .profileImg input {
+    display: none;
+  }
+  .login-form .profileImg {
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 25px ;
+  }
+  .login-form  .profileImg div:hover{
+    transform: scale(1.5) translateX(-25%);
+  }
+  .login-form  .profileImg div{
+    width: fit-content;
+    height: fit-content;
+    transition: .5s;
+    padding: 4px 8px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    bottom: -15px;
+    transform: translateX(-50%);
+    
+  }
+  .ToastContainer{
+    position: relative;
+    z-index: 1000;
+  }
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .login-form img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
   }
   .login-form .input-wrapper {
     height: 54px;

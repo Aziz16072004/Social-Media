@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css'
+import { ToastContainer } from 'react-toastify';
 
 import "./App.css"
 import React, { useEffect, useState } from 'react';
@@ -62,7 +63,11 @@ function App() {
     setShowTheme(newValue);
   };
   return (
-    
+    <>
+    <div className='ToastContainer'>
+
+<ToastContainer /> 
+</div>
     <div className={`${theme} ${color}`}>
       
     {showTheme ?(
@@ -152,7 +157,7 @@ function App() {
       </Routes>
     </Router>
     </div>
-                   
+    </>       
   );
 }
 

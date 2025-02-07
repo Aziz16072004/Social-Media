@@ -52,22 +52,23 @@ return(
     <nav className={`${theme} ${color}`}>
 
     <div className="container" >
-        <header className="row d-sm-flex justify-content-between" >
-            <div className="logo col-6 col-md-4 text-center ">
+        <header className="d-flex  justify-content-between" >
+            <div className="logo  text-center ">{/*col-6 col-md-4*/} 
                 <h2>Social Media</h2>
+                <img src="uploads/logo.svg" alt="logo" />
             </div>
-            <div className="searche   col-md-5 d-md-flex col-1 text-center" >
+            <div className="searche  text-center" >{/*col-md-5 d-md-flex col-1*/} 
                 <img src={searcheImg} alt="" className="searcheImg"/>
-                <input type="text" className="d-none d-md-block"  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
+                <input type="text" className=""  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
                 {showSearchingBar ? (
                     <div className="searchingBar">
                     <ion-icon name="close-outline" onClick={(e) => { e.stopPropagation(); setShowSearchingBar(false); }}></ion-icon>
                    
                    {filteredUsers.map((user)=>{
-                       const isFriend = user?.friends.find((friend) => friend.user === dataStoraged._id )
+                       const isFriend = user?.friends.find((friend) => friend?.user === dataStoraged?._id )
                        return(
                            <div  className="serachePerson container align-items-center" key={user?._id}>
-                        <img src={`/${user?.profileImg}`} alt="" className=""/>
+                        <img src={user?.profileImg} alt="" className=""/>
                         <Link to={`/profile/${user?._id}`} className="serachePersonInformation ">
                             <p>{user?.username}</p>
                            <small className="status">{isFriend ? "Ami(e)" : "Non ami(e)"}</small>
@@ -78,7 +79,7 @@ return(
                    
                 </div>):null}
             </div>
-            <div className="header-rigth col-5 col-sm-3  text-center">
+            <div className="header-rigth   text-center">{/*col-5 col-sm-3*/} 
                 <button onClick={()=>{deconnection()}} className="Logoutbutton">Log Out</button>
             </div>
         </header>

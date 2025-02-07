@@ -89,7 +89,7 @@ export default function Setting(){
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
-  <img className="profilepic__image" src={showProfileImg !== "" ?showProfileImg :`/${userData.profileImg}`} width="150" height="150" alt="Profibild" />
+  <img className="profilepic__image" src={showProfileImg !== "" ?showProfileImg :userData.profileImg} width="150" height="150" alt="Profibild" />
   <div className="profilepic__content">
   <ion-icon name="camera-outline"></ion-icon>
 

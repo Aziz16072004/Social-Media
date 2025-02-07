@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import {useNavigate,Link} from "react-router-dom"
+
 import axios from '../axios';
 import Storiet from "stories-react";
 import "stories-react/dist/index.css";
@@ -28,12 +29,12 @@ function Stories({user}) {
         }
         fetchStories()
     },[])
-    // console.log(storiesContent[0].user);
+
     return (
         <div className="allStories">
             <div className="storys">
                 <Link to={`/stories/create/${user?._id}`} className="block_story story createStory">
-                    <img src={`/${user?.profileImg}`} className='storyImg'/>
+                    <img src={user?.profileImg} className='storyImg'/>
                     <div className='addStory'>
                         <ion-icon name="add-outline"></ion-icon>
                     </div>
@@ -43,7 +44,7 @@ function Stories({user}) {
                         <div className="block_story story" key={index} onClick={()=>{hundleStorie(ele.lastStory.user?._id)}}>
                             <img src={ele.lastStory.image} className='storyImg'/>
                             <div className="img-profile-story">
-                                <img src={`${ele.lastStory.user?.profileImg}`} alt=""/>
+                                <img src={ele.lastStory.user?.profileImg} alt=""/>
                             </div>
                             <p className="story_info">{ele.lastStory.user?.username}</p>
                         </div>

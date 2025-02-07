@@ -2,28 +2,61 @@ const userSchema = require("../models/user");
 const notificationSchema = require("../models/notification");
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
-
+const cloudinary = require('../config/cloudinary');
 
 const Add_InsertUser = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, image } = req.body;
 
     try {
+        // Check if the email already exists
         const check = await userSchema.findOne({ email: email });
         if (check) {
-            return res.status(200).json("existe")
+            return res.status(200).json("existe");
         }
-        
-        const hashedPassword = await bcryptjs.hash(password, 10);
 
-        const newUser = new userSchema({
-            username: username,
-            email: email,
-            password: hashedPassword,
-        });
-        res.json("nonexiste")
-        await newUser.save();
+        let profileImg = image;  // Default image is the base64 string from the body
 
-       
+        // If the image is a file, upload it to Cloudinary
+        if (req.file) {
+            if (!req.file) {
+                return res.status(400).json({ error: 'No file uploaded' });
+            }
+
+            // Cloudinary upload for file
+            await cloudinary.uploader.upload_stream({ resource_type: 'image' }, async (error, uploadedFile) => {
+                if (error) {
+                    return res.status(500).json({ error: 'Error uploading file to Cloudinary' });
+                }
+
+                profileImg = uploadedFile.secure_url;  // Use the uploaded file's URL
+                const hashedPassword = await bcryptjs.hash(password, 10);
+
+                const newUser = new userSchema({
+                    username: username,
+                    email: email,
+                    password: hashedPassword,
+                    profileImg: profileImg
+                });
+
+                await newUser.save();
+                res.json("nonexiste");
+            }).end(req.file.buffer); // Ensure the buffer is passed to Cloudinary
+
+        } else if (image) {
+            // If the image is a base64 string, save it as is
+            const hashedPassword = await bcryptjs.hash(password, 10);
+
+            const newUser = new userSchema({
+                username: username,
+                email: email,
+                password: hashedPassword,
+                profileImg: image  // Save the base64 string as is
+            });
+
+            await newUser.save();
+            res.json("nonexiste");
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Error registering user" });

@@ -15,13 +15,11 @@ import { AiOutlineComment } from "react-icons/ai";
 
 import close from "../imgs/close.png"
 import send from "../imgs/paper-plane-top.png"
-import whiteLove from "../imgs/whiteLove.png"
-import blackLove from "../imgs/blackLove.png"
+
 import loveColored from "../imgs/loveColored.png"
 
 import chat from "../imgs/chat.png"
-import ribbon from "../imgs/ribbon.png"
-import bookmark from "../imgs/bookmark.png"
+
 import Stories from "./Stories"
 import SharePopUp from "./SharePopUp";
 import LoadingPost from "./LoadingPost";
@@ -65,6 +63,8 @@ export default function HomeSection({theme}) {
     const ITEM_HEIGHT = 48;
     
     const handleClick = () => {
+      console.log(fileInputRef.current)
+      
       if (fileInputRef.current) {
         fileInputRef.current.click();        
       }
@@ -120,6 +120,8 @@ export default function HomeSection({theme}) {
         }
     }
     const handleImageChange = (e) => {
+      console.log(e.target.files[0]);
+      
       setPostImage(e.target.files[0]);
     };
     const handleSubmit = async (e) => {
@@ -203,7 +205,7 @@ export default function HomeSection({theme}) {
           </div>
 
           <div className="userPost row">
-            <img src={`/${data.profileImg}`} className="col-2" alt="" />
+            <img src={data.profileImg} className="col-2" alt="" />
             <div className="col-10">
               <h4>{data.username}</h4>
               <p>{data.email}</p>
@@ -256,7 +258,7 @@ export default function HomeSection({theme}) {
         <div className="post-bar" >
                     <div className="profile-img profile-img-post">
                     {data && data.profileImg && (
-                        <img src={`/${data.profileImg}`} alt=""/>
+                        <img src={data.profileImg} alt=""/>
                     )}
                     </div>
                     <div className="input-post-bar">
@@ -318,7 +320,7 @@ export default function HomeSection({theme}) {
                     <div className="post-title">
                             <div className="profile-img img-post">
                            
-                                <img src={`/${post.userId?.profileImg}`} alt=""/>
+                                <img src={post.userId?.profileImg} alt=""/>
                             
                                 </div>
                             <div className="post-name-utilisateur">
@@ -361,7 +363,7 @@ export default function HomeSection({theme}) {
                                 <div className="line1-vue">
                                   <div>
                                   {post?.peopleRated?.map((rater, index) => (
-  index < 3 ? <img src={`/${rater.user?.profileImg}`} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
+  index < 3 ? <img src={rater.user?.profileImg} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
 ))}
               </div>
                                     <p onClick={()=>{fetchData(post._id) ;setShowRatings(true)}}>Like by <b>{post?.peopleRated?.length > 0 ? post?.peopleRated[0]?.user?.username : ""}</b> and <b>{post?.rates > 0 ? post?.rates - 1 : 0} other</b></p>
@@ -382,7 +384,7 @@ export default function HomeSection({theme}) {
             ratingData.peopleRated.map((rate) => (
               <div className="personRateInformation" key={rate.user?._id}>
                 <div>
-                  <img src={`/${rate.user?.profileImg}`} alt="" />
+                  <img src={rate.user?.profileImg} alt="" />
                   <img src={loveColored} className="coloredHeartRate" alt="Love Colored" />
                 </div>
                 <p>{rate.user?.username}</p>
@@ -406,7 +408,7 @@ export default function HomeSection({theme}) {
           ratingData.comments.map((com)=>(
             <div className="comment" key={com._id}>
               
-                  <img src={`/${com.user?.profileImg}`} alt=""/>
+                  <img src={com.user?.profileImg} alt=""/>
                   <div className="comment_description">
                     <p className="comment_title"><b>{com.user?.username}</b></p>
                     <p className="comment_writing"> {com.comment}</p>
@@ -431,7 +433,7 @@ export default function HomeSection({theme}) {
               {post?.comments?.length>0 ?
                 <div className="comment">
                   
-                  <img src={`/${post?.comments[0]?.user?.profileImg}`} alt=""/>
+                  <img src={post?.comments[0]?.user?.profileImg} alt=""/>
                   <div className="comment_description">
                     <p className="comment_title"><b>{post?.comments[0]?.user?.username}</b></p>
                     <p className="comment_writing"> {post?.comments[0]?.comment}</p>
@@ -439,7 +441,7 @@ export default function HomeSection({theme}) {
                 </div>
             :null}
                 <div className="addComment">
-                <img src={`/${data.profileImg}`} alt=""/>
+                <img src={data.profileImg} alt=""/>
                   <div className="comment_description">
                     <input type="text" placeholder="write a comment ...." value={comment} onChange={(e)=>setComment(e.target.value)} />
                     <img src={send} alt="addcomment" className="imageAddComment" onClick={async ()=>{

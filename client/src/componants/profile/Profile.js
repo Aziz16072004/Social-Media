@@ -10,6 +10,9 @@ import SharePopUp from "../SharePopUp";
 import FriendButton from "./FriendButton";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaRegHeart } from "react-icons/fa6";
+import { AiOutlineComment } from "react-icons/ai";
+import { CiMenuKebab } from "react-icons/ci";
 
 export default function Profile({ socket }) {
     const [userData, setUserData] = useState(null);
@@ -147,7 +150,7 @@ const rejectFriend = async (req)=>{
               </div>
             </div>
             <div className="userPost row"> 
-              <img src={`/${userData.profileImg}`} className="col-2" alt=""/>
+              <img src={userData.profileImg} className="col-2" alt=""/>
               <div className="col-10">
                 <h4>{userData.username}</h4>
                 <p>{userData.email}</p>
@@ -163,7 +166,7 @@ const rejectFriend = async (req)=>{
               <div className="w-100 albums" >
               {selectedItem ? 
               
-              (<img src={`/${selectedItem.image}`} alt=""/>)
+              (<img src={selectedItem.image} alt=""/>)
               : (<div>
                 <ion-icon name="albums-outline"></ion-icon>
                 <p>Add pictures or videos</p>      
@@ -189,7 +192,7 @@ const rejectFriend = async (req)=>{
                     <div className="row profileContent">
         <SharePopUp data={userData} postId={selectedItem} trigger={sharePopUp} setTrigger={setSharePopUp}/>
                         <div className="profileItem row col-10 col-md-8 mx-auto align-items-center">
-                            <img src={`/${userData.profileImg}`} alt="" className="col-lg-4 col-12 mx-auto" />
+                            <img src={userData.profileImg} alt="" className="col-lg-4 col-12 mx-auto" />
                             <div className="col-12 col-lg-8">
                                 <div className="profileInfo row my-3 mx-auto justify-content-center align-items-center">
                                     <p className="col-md-5 col-4 mx-auto">{userData.username}</p>
@@ -217,27 +220,22 @@ const rejectFriend = async (req)=>{
                                             <div className="postpic__content">
                                                 <div className='row'>
                                                     <div className="col-4">
-                                                        <ion-icon name="heart-outline"></ion-icon>
+                                                        <FaRegHeart className="ProfileIcon"/>
                                                         <p>{post.rates} </p>
                                                     </div>
                                                     <div className="col-4">
-                                                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                                                        <AiOutlineComment className="ProfileIcon"/>
                                                         <p>{post.comments.length} </p>
                                                     </div>
                                                     <div className="col-4">
-                                                        <IconButton
-                                                            aria-label="more"
-                                                            id="long-button"
-                                                            aria-controls={open ? 'long-menu' : undefined}
-                                                            aria-expanded={open ? 'true' : undefined}
-                                                            aria-haspopup="true"
-                                                            onClick={(e) => {
-                                                                setAnchorEl(e.currentTarget);
-                                                                setSelectedItem(post);
-                                                            }}
-                                                        >
-                                                            <MoreVertIcon />
-                                                        </IconButton>
+                                                        <button  onClick={(e) => {
+                                                            setAnchorEl(e.currentTarget);
+                                                            setSelectedItem(post);
+                                                        }}>
+                                                            <CiMenuKebab className="ProfileIcon" />
+                                                           
+
+                                                        </button>
                                                         <Menu
                                                             id="long-menu"
                                                             MenuListProps={{

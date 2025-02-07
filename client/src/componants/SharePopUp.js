@@ -26,7 +26,7 @@ export default function SharePopUp(props){
                     return (
                         <div className="sharePopUpBodyUser" key={friend.user._id}>
                         <div>
-                            <img src={`/${friend.user.profileImg}`} alt={friend.user.username} />
+                            <img src={friend.user.profileImg} alt={friend.user.username} />
                             <p>{friend.user.username}</p>
                         </div>
                         <button onClick={async ()=>{

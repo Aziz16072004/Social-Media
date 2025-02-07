@@ -117,7 +117,7 @@ export default function Friends({socket , users}){
                     <Link to={`/chat/${userData._id}/${friend.user?._id}`}   className="message-person ">
                         
                         <div className="profile-img-friends ">
-                            <img src={`/${friend.user?.profileImg}`} alt=""/>
+                            <img src={friend.user?.profileImg} alt=""/>
                             {users.some(user => user?.userId ===friend.user?._id) ?(
 
                                 <span className="activePerson"></span>
@@ -143,7 +143,7 @@ export default function Friends({socket , users}){
                 <div className="requests" key={req.user?._id}>
                     <div className="requests-person ">
                         <div className="profile-img">
-                            <img src={`/${req.user?.profileImg}`} alt=""/>
+                            <img src={req.user?.profileImg} alt=""/>
                         </div>
                         <div className="requests-info"> 
                             <b>{req.user?.username}</b> <br/> <small> 8 mutal friends</small>

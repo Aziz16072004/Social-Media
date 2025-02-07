@@ -1,17 +1,15 @@
 import { useState } from "react";
-const InputField = ({ type, placeholder, icon, register }) => {
-    // State to toggle password visibility
-    const [isPasswordShown, setIsPasswordShown] = useState(false);
-    console.log(register); // Log to inspect the received props
-  
+const InputField = ({ type, placeholder,ref, icon, register }) => {
+    const [isPasswordShown, setIsPasswordShown] = useState(false);  
     return (
       <div className="input-wrapper">
         <input
           type={isPasswordShown ? 'text' : type}
           placeholder={placeholder}
           className="input-field"
+          ref={ref}
           required
-          {...register} // Spread the received props onto the input element
+          {...register}
         />
         <i className="material-symbols-rounded">{icon}</i>
         {type === 'password' && (

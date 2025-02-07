@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
 ],
   profileImg : {
     type:String,
-    default : "uploads/unknown.jpg"
+    default : "/uploads/unknown.jpg"
   },
   friends : [{
     user : {

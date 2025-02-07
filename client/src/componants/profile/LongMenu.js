@@ -6,7 +6,6 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import axios from '../../axios';
 import 'react-notifications-component/dist/theme.css';
 import { ReactNotifications } from 'react-notifications-component';
-import { Store } from 'react-notifications-component';
 import { toast } from 'react-toastify';
 
 const options = [

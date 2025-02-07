@@ -6,6 +6,7 @@ const StoriesCreate = () => {
 
     const [storyImage, setStoryImage] = useState(null);
     const [stories , setStories] = useState(null)
+    const [userData , setUserData] = useState({})
     const id = useParams().id
     const fileInputRef = useRef()
 
@@ -27,6 +28,7 @@ const StoriesCreate = () => {
         }
     }
     useEffect(()=>{
+        setUserData(JSON.parse(localStorage.getItem("user")));
         const fetchStories = async ()=>{
             try {
                 const res = await axios.get(`/story/getStories?userId=${id}`)
@@ -80,10 +82,10 @@ const StoriesCreate = () => {
                     <div className="profile-bar" key={story._id}>
                     <div className="profile-bar-content"  >
                         <div className="profile-img">
-                            <img src={`/${story.image}`}alt=""/>
+                            <img src={story.image}alt=""/>
                         </div>
                         <div className="info">
-                            <b id="name-of-profile">aziz</b> <br/>
+                            <b id="name-of-profile">{userData?.username}</b> <br/>
                             <small id="tag-of-profile">{formatPostDate(story.createdAt)}</small>
                         </div>
                     </div>  

@@ -154,7 +154,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                 <Link to={`/profile/${data._id}`}  className="profile-bar" >
                     <div className="profile-bar-content"  >
                         <div className="profile-img">
-                            <img src={`${data.profileImg}`}alt=""/>
+                            <img src={data.profileImg}alt=""/>
                         </div>
                         <div className="info">
                             <b id="name-of-profile">{data.username}</b> <br/>
@@ -189,7 +189,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
 
                     <div className={notifi.read ? "notification-person " :"notification-person notRead"} key={uuidv4()} onClick={()=>{readOneNotification(notifi._id)}} >
                         <div className="profile-img">
-                            <img src={`/${notifi.sender?.profileImg}`} alt=""/>
+                            <img src={notifi.sender?.profileImg} alt=""/>
                         </div>
                         <div className="notification-info"> 
                             <b>{notifi.sender?.username}</b> <small> {notifi.description}<br/>

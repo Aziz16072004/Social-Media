@@ -1,6 +1,8 @@
 import axios from 'axios'; 
 import { useNavigate, Link } from "react-router-dom";
 import "./login.css";
+import { ToastContainer } from 'react-toastify';
+
 import { useForm } from "react-hook-form";
 import Cookies from 'js-cookie';
 import SocialLogin from './SocialLogin';
@@ -46,6 +48,12 @@ function Login() {
   }
 
   return (
+     <>
+     <div className='ToastContainer'>
+
+        <ToastContainer /> 
+     </div>
+        
     <div className='loginPage'>
       <div className="login-container">
       <h2 className="form-title">Log in with</h2>
@@ -69,6 +77,7 @@ function Login() {
       </p>
     </div>
     </div>
+    </>
   );
 }
 
