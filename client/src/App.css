@@ -84,15 +84,16 @@ h2{
     padding: 0 !important;
 }
 .searchingBar ion-icon{
-    cursor: pointer;
-    
+    cursor: pointer;   
     position: absolute;
     font-size: 26px;
     right: 10px;
 }
+.darkMode .searcheImg  ,.blackMode .searcheImg  {
+    fill: white;
+} 
 .searche .searcheImg {
-    width: 17px;
-    height: 17px;
+    font-size: 21px;
     position: absolute;
     left: 23px;
     top: 50%;
@@ -257,21 +258,26 @@ p{
 }
 
 /* after edit  */
+.notification-hidden
+{
+    transition: .5s;
+    left: -200vw;
+}
+.notification-bar-active{
+    left: 104%;
+    transition: .5s;
+}
 .notification-bar{
     BACKGROUND: white;
-    width: 0;
     padding: 14px 0px;
     position: absolute;
+    width: 400px ;
     TOP: 0;
     border-radius: 28px;
-    left: 104%;
-    display: block;
-    transition-property: width;
-  transition-duration: .5s;
-  transition-delay: .1s;
-  max-height: 560px;
-  overflow-y: auto;
-  overflow-x: hidden;
+    transition: .5s;
+    max-height: 560px;
+    overflow-y: auto;
+    overflow-x: hidden;
     z-index: 1000;
     background-color: var(--color-white);
 }
@@ -284,10 +290,7 @@ p{
     justify-content: center;
 }
 .notification-bar .notification-person {
-    display: none;
     margin: 5px 0;
-    opacity:0;
-    visibility: 0;
     transition-delay: 1s;
     transition: 1s;
 }
@@ -297,11 +300,7 @@ p{
 .btn-sended{
     background-color: gray;
 }
-.notification-bar-active{
-    width: 400px !important;
-    transition: 1s;
-    transition-timing-function: ease-in-out;
-}
+
 .notification-bar-active::before{
     width: 24px !important;
     
@@ -533,13 +532,8 @@ p{
     display: flex;
     position: relative;
 }
-.notification-bar .notification-person{
-    width: 0;
-    transition: 2s;
-}
-.notification-bar-active .notification-person{
-    width: 100% !important;
-}
+
+
 .post-bar input{
     width: 100%;
     background-color: var(--color-white);
@@ -997,8 +991,8 @@ main{
 @media (max-width: 500px){
     .container {
         padding: 0 !important;
-
     }
+    
 }
 @media (min-width: 1400px){
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
@@ -1064,6 +1058,12 @@ main{
     }
 }
 @media (max-width: 768px){
+    
+    .searchingBar{
+        
+        left: 50% !important;
+        transform: translateX(-50%);
+    }
     .logo img{
         display: block;
         width: 70px;
@@ -1382,18 +1382,26 @@ position: relative;
   ::-webkit-scrollbar-corner {
     background-color: #f1f1f1;
   }
+  
+.searchingBarActive{
+    top: 50px;
+}
+.searchingBarHidden{
+
+    top: -100vh;
+}
   .searchingBar{
     position: absolute;
-
+    transition: .5s;
     width: 100%;
     height: 350px;
     overflow-y: scroll;
     background-color: var(--color-white);
-    top: 50px;
-    left: -50px;
+    
+    left: 0;
     z-index: 100;
     border-radius: 6px;
-    padding: 5px 0px;
+    padding: 5px 20px;
   }
   .profile_content{
     background-color: red;

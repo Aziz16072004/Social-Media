@@ -99,6 +99,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
         };
         fetchData();
     },[])
+    
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -167,9 +168,9 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                         
                         if(e.Name === "notifications"){
                             return (
-                                <div className="home"  key={uuidv4()}>
+                                <div className="home"  key={uuidv4()}  onClick={()=>{handleNotifications()}}>
 
-                                <div className="home notifications" onClick={()=>{handleNotifications()}} >
+                                <div className="home notifications" >
                                     <div className="notifiIcon">
                                         <ion-icon name={e.ionIconName}></ion-icon>
                                         {newNotifi>0 && <span className="newNotifi">{newNotifi}</span>}
@@ -180,8 +181,8 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                         < p >{e.Name}</p>
                         </div>
                                 </div>
-                                {notification.length>0 && (
-                                <div className={ !display ? "notification-bar" : "notification-bar notification-bar-active" }>
+                               
+                                <div className={ !display ? "notification-bar notification-hidden" : "notification-bar notification-bar-active" }>
             
                 { notification && notification.map((notifi , i)=>{
                     return(
@@ -202,7 +203,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                 )
                 })}
                 </div>
-                )}
+
             </div>)
                         }
                         else{

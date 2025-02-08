@@ -2,6 +2,7 @@ import searcheImg  from "../imgs/search-interface-symbol.png"
 import axios from "../axios"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react"
+import { CiSearch } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -58,10 +59,11 @@ return(
                 <img src="uploads/logo.svg" alt="logo" />
             </div>
             <div className="searche  text-center" >{/*col-md-5 d-md-flex col-1*/} 
-                <img src={searcheImg} alt="" className="searcheImg"/>
+            <CiSearch className="searcheImg"/>
+
+               
                 <input type="text" className=""  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
-                {showSearchingBar ? (
-                    <div className="searchingBar">
+                    <div className={showSearchingBar ? "searchingBarActive searchingBar" : "searchingBarHidden searchingBar"}>
                     <ion-icon name="close-outline" onClick={(e) => { e.stopPropagation(); setShowSearchingBar(false); }}></ion-icon>
                    
                    {filteredUsers.map((user)=>{
@@ -76,8 +78,9 @@ return(
                         
                     </div>)
                 })}
+            </div>
                    
-                </div>):null}
+                
             </div>
             <div className="header-rigth   text-center">{/*col-5 col-sm-3*/} 
                 <button onClick={()=>{deconnection()}} className="Logoutbutton">Log Out</button>
