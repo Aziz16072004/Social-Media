@@ -320,9 +320,11 @@ p{
 }
 .notification-person small {
     color: #9f9f9f;
-
 }
-.notification-bar::before{
+.notification-bar h1{
+    padding: 0 40px;
+}
+/* .notification-bar::before{
     content: "";
     width: 0;
     top: 28px;
@@ -331,7 +333,7 @@ p{
     height: 24px;
     background-color: white;
     border-radius: 22px;
-}
+} */
 .line-notification{
     display: none;
 }

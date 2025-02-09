@@ -183,25 +183,32 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                                 </div>
                                
                                 <div className={ !display ? "notification-bar notification-hidden" : "notification-bar notification-bar-active" }>
-            
-                { notification && notification.map((notifi , i)=>{
-                    return(
-                        <Link to={`/profile/${notifi.sender?._id}`}>
+                                {notification?.length === 0 ? (
+  <h1>No notification</h1>
 
-                    <div className={notifi.read ? "notification-person " :"notification-person notRead"} key={uuidv4()} onClick={()=>{readOneNotification(notifi._id)}} >
-                        <div className="profile-img">
-                            <img src={notifi.sender?.profileImg} alt=""/>
-                        </div>
-                        <div className="notification-info"> 
-                            <b>{notifi.sender?.username}</b> <small> {notifi.description}<br/>
-                            {formatPostDate(notifi.createdAt)}
-                            </small>
-                        </div>
-                        </div>
-                        </Link>
-                    
-                )
-                })}
+) : (
+  notification?.map((notifi) => (
+    <Link key={notifi._id} to={`/profile/${notifi.sender?._id}`}>
+      <div
+        className={notifi.read ? "notification-person" : "notification-person notRead"}
+        onClick={() => readOneNotification(notifi._id)}
+      >
+        <div className="profile-img">
+          <img src={notifi.sender?.profileImg} alt="" />
+        </div>
+        <div className="notification-info">
+          <b>{notifi.sender?.username}</b>
+          <small>
+            {notifi.description}
+            <br />
+            {formatPostDate(notifi.createdAt)}
+          </small>
+        </div>
+      </div>
+    </Link>
+  ))
+)}
+
                 </div>
 
             </div>)
