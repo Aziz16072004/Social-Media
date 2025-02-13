@@ -1,5 +1,6 @@
 import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
-import axios from "axios";
+import axios from '../../axios'; 
+
 import { jwtDecode } from "jwt-decode";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
@@ -15,7 +16,7 @@ const SocialLogin = () => {
       // const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
       //   headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
       // });
-      const res = await axios.post("http://localhost:8000/api/auth/google", {
+      const res = await axios.post("/auth/google", {
         access_token: tokenResponse.access_token,
       });
       if (res.data.user) {
