@@ -324,6 +324,9 @@ p{
 .notification-bar h1{
     padding: 0 40px;
 }
+.googleAuth{
+    display: none !important;
+}
 /* .notification-bar::before{
     content: "";
     width: 0;

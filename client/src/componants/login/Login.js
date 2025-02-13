@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useNavigate, Link } from "react-router-dom";
 import "./login.css";
 import { ToastContainer } from 'react-toastify';
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 import { useForm } from "react-hook-form";
 import Cookies from 'js-cookie';
@@ -30,6 +31,8 @@ function Login() {
         email: data.email,
         password: data.password
       });
+      console.log(res.data);
+      
       if (res.data === "Incorrect password") {
         setError("password", { type: "manual", message: "Password is invalide" });
         return;

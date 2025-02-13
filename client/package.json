@@ -27,6 +27,9 @@
   "@mui/styled-engine-sc": "^6.0.0-alpha.12",
   
     
+  "@react-oauth/google": "^0.12.1",
+  
+    
   "@testing-library/jest-dom": "^5.17.0",
   
     
@@ -46,6 +49,9 @@
   
     
   "js-cookie": "^3.0.5",
+  
+    
+  "jwt-decode": "^4.0.0",
   
     
   "query-string": "^8.2.0",
