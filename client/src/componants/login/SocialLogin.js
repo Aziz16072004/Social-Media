@@ -9,13 +9,9 @@ const clientID = "1016069592264-cubb8p9j5su3826i0pfd6b5ksko18bl5.apps.googleuser
 
 const SocialLogin = () => {
   const navigate = useNavigate();
-
   const handleSuccess = async (tokenResponse) => {
     console.log("Token received: ", tokenResponse);
     try {
-      // const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
-      //   headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-      // });
       const res = await axios.post("/auth/google", {
         access_token: tokenResponse.access_token,
       });

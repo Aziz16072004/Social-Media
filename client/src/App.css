@@ -16,9 +16,9 @@ body *{
     --light-color-lightness: 15%;
     --white-color-lightness: 20%;
     --dark-color-lightness: 95%;
-    --color-white: /*hsl(252, 30%, var(--white-color-lightness))*/ white;
+    --color-white:  white;
     --color-light: hsl(252, 30%, var(--light-color-lightness));
-    --color-dark:  /*hsl(252, 30%, var(--dark-color-lightness)) */ black; 
+    --color-dark:  black; 
     --big-size:30px;
     --medium-size:20px;
     --small-size:14px;
@@ -48,7 +48,9 @@ body *{
     --color-dark:  hsl(252, 30%, var(--dark-color-lightness)) ;
     --color-white-shadow: hsl(252, 30%, var(--white-color-lightness))
 }
-
+.salbhi{
+    color: var(--color-white);
+}
 .blackMode{
     --main-background-color : black;
     --color-white: #110e1b;
@@ -132,6 +134,7 @@ h2{
 }
 nav{
     background-color: var(--color-white);
+    border-bottom: 1px solid rgb(135, 135, 135) !important;
 }
 HEADER {
     align-items: center
@@ -240,7 +243,12 @@ p{
 .paramettre ion-icon{
     margin-right: 23px;
 }
+.home{
+transition: 0.5s;
+
+}
 .home:hover{
+    
     color: #6c4be1;
     background-color:var(--main-background-color) ;
 }
@@ -262,6 +270,9 @@ p{
 {
     transition: .5s;
     left: -200vw;
+}
+.notification-bar-active h1{
+    font-size: 1.5 !important;
 }
 .notification-bar-active{
     left: 104%;
@@ -2357,3 +2368,7 @@ font-size: 20px ;
 
 
 /* end new login ui */
+.posts ,.input-post-bar input ,.paramettre,.profile-bar,.message,.requests{
+    border: 1px solid rgb(135, 135, 135) !important;
+  
+}

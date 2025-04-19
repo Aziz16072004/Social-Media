@@ -24,7 +24,6 @@ export default function Header({theme , color}){
     }
     useEffect(()=>{
         const fetchData=async()=>{
-            
             try {
                 const res = await axios.get("/home/getAllUsers",{
                     withCredentials: true,
@@ -51,18 +50,15 @@ export default function Header({theme , color}){
 },[])
 return(
     <nav className={`${theme} ${color}`}>
-
     <div className="container" >
         <header className="d-flex  justify-content-between" >
-            <div className="logo  text-center ">{/*col-6 col-md-4*/} 
+            <div className="logo  text-center ">
                 <h2>Social Media</h2>
                 <img src="uploads/logo.svg" alt="logo" />
             </div>
-            <div className="searche  text-center" >{/*col-md-5 d-md-flex col-1*/} 
+            <div className="searche  text-center" >
             <CiSearch className="searcheImg"/>
-
-               
-                <input type="text" className=""  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
+                <input type="text"  onChange={handleInputChange} onFocus={()=>{hundleFocuse() }}  placeholder="searche for creator , inspiration and projects"/>
                     <div className={showSearchingBar ? "searchingBarActive searchingBar" : "searchingBarHidden searchingBar"}>
                     <ion-icon name="close-outline" onClick={(e) => { e.stopPropagation(); setShowSearchingBar(false); }}></ion-icon>
                    

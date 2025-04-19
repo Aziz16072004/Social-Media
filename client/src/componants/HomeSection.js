@@ -266,11 +266,14 @@ export default function HomeSection({theme}) {
                     </div>
                     <button href="#post" className="button btn-post"  onClick={()=>{setPostWidget(true)}}>Post</button>
         </div>
+        
         <div className="section2">
           <SharePopUp data={data} postId={selectedItem} trigger={sharePopUp} setTrigger={setSharePopUp}/>
+            
           {loading ? (
             <LoadingPost/>
     ) : (
+
          posts.map((post)=>{
              const createdAt = formatPostDate(post.createdAt)
             return(
@@ -477,7 +480,9 @@ export default function HomeSection({theme}) {
             
         </div>
         </div>
-
+         <div>
+          
+         </div>
         </div>
         
          </>

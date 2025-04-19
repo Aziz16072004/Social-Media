@@ -67,15 +67,11 @@ function Login() {
           {errors.email && <p className="errorMessage">{errors.email.message}</p>}
       <InputField type="password" placeholder="Password" icon="lock"   register={register("password")}  />
         {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-
         {errors.password && <p className="errorMessage">{errors.password.message}</p>}
-
         <a href="#" className="forgot-password-link">Forgot password?</a>
         <input type="submit" className="login-button" value="Log In"/>
       </form>
       <p className="signup-prompt">
-      
-   
         Don&apos;t have an account? <Link to="/signup">Sign up</Link>
       </p>
     </div>
