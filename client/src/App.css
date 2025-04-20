@@ -136,8 +136,20 @@ nav{
     background-color: var(--color-white);
     border-bottom: 1px solid rgb(135, 135, 135) !important;
 }
+.errorAlert{
+    background: #ff2e2e;
+    color: white;
+    font-weight: bold;
+}
+.successAlert{
+    background: #015f01;
+    font-weight: bold;
+}
 HEADER {
     align-items: center
+}
+.profile-button-disable{
+    background-color: gray !important;
 }
 .searche{
     flex-grow: 3;
@@ -400,7 +412,7 @@ transition: 0.5s;
     overflow: hidden;
     width: 100%;
     
-    border-radius: 15px 15px 0 0;
+    border-radius: 15px;
 }
 .allStories{
     
@@ -1008,7 +1020,7 @@ main{
     .container {
         padding: 0 !important;
     }
-    
+   
 }
 @media (min-width: 1400px){
 .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
@@ -1033,7 +1045,7 @@ main{
 }
 
 @media (min-width: 1000px){
-
+    
     .selectingFriendChat h2{
         font-size: 16px;
     }   
@@ -1074,7 +1086,9 @@ main{
     }
 }
 @media (max-width: 768px){
-    
+    .showRatesContent{
+        width: 90% !important;
+    }
     .searchingBar{
         
         left: 50% !important;
@@ -1333,19 +1347,19 @@ img:hover {
     left: 0;
     top: 0;
     z-index: 1000;
-    background-color: #afafaf46;
+    background-color: rgba(128, 128, 128, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .showRatesContent{
-    background-color: white;
+    background-color: var(--color-white);
     height: 60%;
     width: 40%;
     border-radius: 10px;
     padding: 15px 24px;
-    overflow: hidden;
 }  
+
 .topBarRates{
     display: flex;
     justify-content: space-between;
@@ -1357,7 +1371,7 @@ img:hover {
     cursor: pointer;
 }
 .ratesBody{
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 90%;
 }
 .personRateInformation{
@@ -1530,8 +1544,12 @@ position: relative;
     width: 100%;
     position: relative;
 }
+.profilepic__content ion-icon , .profilepic__content span {
+    color: white !important;
+}
 .addChat input{
     width: 100%;
+    background-color: var(--main-background-color);
     padding: 15px 10px;
     border: 1px solid rgb(192, 192, 192);
     outline: none;
@@ -1737,6 +1755,7 @@ font-size: 20px ;
     padding: 10px 15px;
 }
 .storyCreating{
+    overflow: hidden;
     height: 90vh;
     background-color: var(--color-white);
     box-shadow: 0px 0px 19px 0px #80808078;
@@ -1843,18 +1862,23 @@ font-size: 20px ;
 
 .sharePopUpBody button{
     padding: 5px 10px ;
-    color: var(--main-color);
+    color: white;
     font-weight: bold;
     border-radius: 5px;
     border: none;
-    background-color: rgba(0, 110, 255, 0.586);
+    background-color: var(--main-color);
 }
 .sharePopUpBodyUser ,.sharePopUpBodyUser div{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
+.sharePopUp .sharePopUpBodyUser div p {
+    padding-left: 12px;
+}
+.sharePopUp{
+    padding: 15px 16px;
+}
 .sharePopUpBodyUser img{
     width: 50px;
     height: 50px;

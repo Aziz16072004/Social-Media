@@ -1,9 +1,10 @@
-// In StoriesCreate.js
+
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useRef, useState } from 'react';
 import axios from "../axios"
 import { Link, useParams } from 'react-router-dom';
 const StoriesCreate = () => {
-
+    const [loading , setLoading] = useState(false);
     const [storyImage, setStoryImage] = useState(null);
     const [stories , setStories] = useState(null)
     const [userData , setUserData] = useState({})
@@ -48,7 +49,8 @@ const StoriesCreate = () => {
         setStoryImage(e.target.files[0]);
         
     };
-    const uploadStorie = async () =>{        
+    const uploadStorie = async () =>{
+        setLoading(true);        
         const formData = new FormData();
         formData.append('userId', id);
         formData.append('image', storyImage);
@@ -60,6 +62,9 @@ const StoriesCreate = () => {
             setStories(prevStories => [res.data , ...prevStories]);
         } catch (error) {
             console.log(error);
+        }
+        finally{
+            setLoading(false);
         }
     }
   return (
@@ -94,8 +99,11 @@ const StoriesCreate = () => {
             </div>
 
             {storyImage ? (
-                
-                    <button className='btn-addStory' onClick={()=>uploadStorie()}>Save</button>
+                loading?(
+
+                    <button className='btn-addStory'><CircularProgress size="2rem"/></button>
+                ):
+                (  <button className='btn-addStory' onClick={()=>uploadStorie()}>Save</button>)
                 
             ) : null}
         </div>

@@ -77,7 +77,8 @@ export default function Bookmarks(){
             <div className="post-title">
               <div className="profile-img img-post">
                 <img
-                  src={postItem.post.userId.profileImg}
+                src={postItem.post.userId.profileImg == "uploads/unknown.jpg" || postItem.post.userId.profileImg =="" || postItem.post.userId.profileImg == null ? "../uploads/unknown.jpg" : postItem.post.userId.profileImg}
+                  
                   alt=""
                 />
               </div>
@@ -89,7 +90,8 @@ export default function Bookmarks(){
             <div className="post-description">{postItem.post.description}</div>
             <div className="postes-images-post">
               <img
-                src={postItem.post.image}
+              src={postItem.post.image == "uploads/unknown.jpg" || postItem.post.image =="" || postItem.post.image == null ? "/uploads/unknown.jpg" : postItem.post.image}
+             
                 alt=""
               />
             </div>
@@ -169,7 +171,8 @@ export default function Bookmarks(){
                     index < 3 ? (
                       <img
                         key={rater.user?._id}
-                        src={rater.user?.profileImg}
+                        src={rater.user?.profileImg == "uploads/unknown.jpg" || rater.user?.profileImg =="" || rater.user?.profileImg == null ? "/uploads/unknown.jpg" : rater.user?.profileImg}
+                       
                         alt=""
                         className={`img${index + 1}`}
                       />
@@ -215,7 +218,7 @@ export default function Bookmarks(){
                             >
                               <div>
                                 <img
-                                  src={rate.user?.profileImg}
+                                  src={rate.user?.profileImg || "uploads/unknown.jpg"}
                                   alt=""
                                 />
                                 <img
@@ -258,7 +261,7 @@ export default function Bookmarks(){
                             ratingData.comments.map((com) => (
                               <div className="comment" key={com._id}>
                                 <img
-                                  src={com.user?.profileImg}
+                                  src={com.user?.profileImg || "uploads/unknown.jpg"}
                                   alt=""
                                 />
                                 <div className="comment_description">
@@ -298,7 +301,7 @@ export default function Bookmarks(){
               {postItem.post.comments.length > 0 && (
                 <div className="comment">
                   <img
-                    src={postItem.post.comments[0].user?.profileImg}
+                    src={postItem.post.comments[0].user?.profileImg || "uploads/unknown.jpg"}
                     alt=""
                   />
                   <div className="comment_description">

@@ -1,7 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const userController  = require('../controller/userController')
-const upload = require("../middlewares/userImg");
+const multer = require('multer');
+const upload = multer();
 router.post("/addFriend" , userController.addFriend)
 router.post("/acceptfriend" , userController.acceptfriend)
 router.delete("/rejectfriend" , userController.rejectfriend)

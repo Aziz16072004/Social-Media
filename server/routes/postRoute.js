@@ -2,8 +2,8 @@ const express = require("express")
 const router = express.Router()
 const postController  = require('../controller/postController')
 const multer = require('multer');
-
 const upload = multer();
+
 router.post("/upload" ,upload.single('image'),postController.uploadPost)
 router.get("/" , postController.getPosts)
 router.post("/addRate" , postController.addRate)

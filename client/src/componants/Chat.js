@@ -193,7 +193,7 @@ export default function Chat({socket}){
                     
                     <div className="userContainer" onClick={()=>{setShowUser(friend)}}>
                         <div>
-                            <img src={friend.user?.profileImg}/>
+                            <img src={friend.user?.profileImg || "/uploads/unknown.jpg"}/>
                             <div>
                             <h3>{friend.user?.username}</h3>
                             <p>{lastMessages[friend.user?._id]} </p>
@@ -215,7 +215,7 @@ export default function Chat({socket}){
                         <IoMdArrowBack className="backArrow" onClick={()=>setShowUser(false)}/>
                         <div className="userContainer">
                 <div>
-                    <img src={showUser.user?.profileImg}/>
+                    <img src={showUser.user?.profileImg || "/uploads/unknown.jpg"}/>
                     <div>
                     <h3>{showUser.user?.username}</h3>
                     {users.some(user => user?.userId ===showUser.user?._id) ?(
@@ -231,7 +231,7 @@ export default function Chat({socket}){
                        
                         {messages.map((msg)=>(
                             <div className={msg.fromSelf ? "reciever" : "sender"}>
-                            { !msg.fromSelf  ?(<img src={showUser?.user?.profileImg}/>):null}
+                            { !msg.fromSelf  ?(<img src={showUser?.user?.profileImg || "/uploads/unknown.jpg"}/>):null}
                             <div>
                                 <span></span>
                                 <div ref={scrollRef}>
@@ -246,7 +246,7 @@ export default function Chat({socket}){
                                  ))}
                          {waitingMessage ? (
                             <div className="loadingMessage">
-                                <img src={showUser?.user?.profileImg}/>
+                                <img src={showUser?.user?.profileImg || "/uploads/unknown.jpg"}/>
                                 <div>
                                 <div id="loading-bubble">
                                     <div class="spinner">

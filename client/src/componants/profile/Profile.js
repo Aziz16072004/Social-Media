@@ -122,6 +122,8 @@ const rejectFriend = async (req)=>{
                 const res = await axios.get(`/home/getOneUser/${id}`, { withCredentials: true });
                 const res2 = await axios.get(`/posts/showPostJustForProfile?userId=${id}`, { withCredentials: true });
                 setUserData(res.data);
+                
+                
                 // console.log("this is user Profile",res.data);
                 setPosts(res2.data);
             } catch (error) {
@@ -190,9 +192,10 @@ const rejectFriend = async (req)=>{
           ):null
         } 
                     <div className="row profileContent">
+                        {console.log(selectedItem)}
         <SharePopUp data={userData} postId={selectedItem} trigger={sharePopUp} setTrigger={setSharePopUp}/>
                         <div className="profileItem row col-10 col-md-8 mx-auto align-items-center">
-                            <img src={userData.profileImg} alt="" className="col-lg-4 col-12 mx-auto" />
+                            <img src={userData.profileImg == "uploads/unknown.jpg" || userData.profileImg =="" || userData.profileImg == null ? "../uploads/unknown.jpg" : userData.profileImg} alt="" className="col-lg-4 col-12 mx-auto" />
                             <div className="col-12 col-lg-8">
                                 <div className="profileInfo row my-3 mx-auto justify-content-center align-items-center">
                                     <p className="col-md-5 col-4 mx-auto">{userData.username}</p>
@@ -206,8 +209,8 @@ const rejectFriend = async (req)=>{
                                 </div>
                                 <div className="row postInfo">
                                     <p className="col-4">{posts.length} publications</p>
-                                    <p className="col-4">127 amie</p>
-                                    <p className="col-4">169 suivie</p>
+                                    <p className="col-4">{userData.friends.length} amie</p>
+                                    <p className="col-4">{userData.friends.length + userData.requests.length} suivie</p>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +233,7 @@ const rejectFriend = async (req)=>{
                                                     <div className="col-4">
                                                         <button  onClick={(e) => {
                                                             setAnchorEl(e.currentTarget);
-                                                            setSelectedItem(post);
+                                                            setSelectedItem(post._id);
                                                         }}>
                                                             <CiMenuKebab className="ProfileIcon" />
                                                            

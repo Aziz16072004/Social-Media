@@ -66,7 +66,7 @@ return(
                        const isFriend = user?.friends.find((friend) => friend?.user === dataStoraged?._id )
                        return(
                            <div  className="serachePerson container align-items-center" key={user?._id}>
-                        <img src={user?.profileImg} alt="" className=""/>
+                        <img src={user?.profileImg || "/uploads/unknown.jpg" || "/uploads/unknown.jpg"} alt="" className=""/>
                         <Link to={`/profile/${user?._id}`} className="serachePersonInformation ">
                             <p>{user?.username}</p>
                            <small className="status">{isFriend ? "Ami(e)" : "Non ami(e)"}</small>

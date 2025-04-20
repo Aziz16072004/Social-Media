@@ -1,7 +1,7 @@
 import "./Setting.css"
 import 'bootstrap/dist/css/bootstrap.css'
 import React, { useRef } from 'react';
-    
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from "../../axios"
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
@@ -19,7 +19,7 @@ export default function Setting(){
     setShowProfileImg(URL.createObjectURL(e.target.files[0]))
 
   };
-  
+  const [loading , setLoading] = useState(false)
   const [userData, setUserData] = useState({});
   const [username, setUsername] = useState("");
   const [ErrorMessage, setErrorMessage] = useState("");
@@ -46,35 +46,37 @@ export default function Setting(){
     getUserInformations();
   }, []);
 
-  const hundleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('profileImg', profileImg);
-    if (currentPassword === "" && newPassword === "") {
-      formData.append('newPassword', userData.password);
-    }
-    else if (currentPassword !== "" &&  newPassword === ""){
-    return setErrorMessage("new password should be full")
+ const hundleSubmit = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
+  formData.append('username', username);
+  formData.append('profileImg', profileImg);
+
+  if (currentPassword === "" && newPassword === "") {
+    formData.append('newPassword', userData.password); // or don't update password
+  } else if (currentPassword !== "" && newPassword === "") {
+    return setErrorMessage("New password is required.");
+  } else if (currentPassword !== "" && newPassword !== "") {
+    formData.append("currentPassword", currentPassword); // send it for backend verification
+    formData.append("newPassword", newPassword);
   }
-    else if (currentPassword !== userData.password  &&  newPassword !== ""){
-      return setErrorMessage("current Password is invalide")
+
+  try {
+    setLoading(true)
+    const res = await axios.patch(`/user/updateUser/${id}`, formData);
+    if (res.data.error) return setErrorMessage(res.data.error);
+    
+    setValidation("Saved data successfully.");
+    setUserData(res.data);
+    localStorage.setItem("user", JSON.stringify(res.data));
+  } catch (error) {
+    console.log(error);
+    setErrorMessage(error.response.data.error);
   }
-    else {
-    setErrorMessage("")
-    formData.append('newPassword', newPassword);
-    try {
-      const res = await axios.patch(`/user/updateUser/${id}`, formData);
-      if(res.data){
-        setValidation("saving data successfully")
-      }
-      setUserData(res.data);    
-      localStorage.setItem("user",JSON.stringify(res.data));
-    } catch (error) {
-      console.log(error);
-    }
+  finally{
+    setLoading(false)
   }
-  };
+};
     return(
         <form className="container-parametre" onSubmit={hundleSubmit}>
         <div className="container rounded bg-white">
@@ -89,7 +91,22 @@ export default function Setting(){
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
-  <img className="profilepic__image" src={showProfileImg !== "" ?showProfileImg :userData.profileImg} width="150" height="150" alt="Profibild" />
+<img
+  className="profilepic__image"
+  src={
+    showProfileImg !== ""
+      ? showProfileImg
+      : (userData.profileImg === "uploads/unknown.jpg" ||
+         userData.profileImg === "" ||
+         userData.profileImg == null)
+        ? "../uploads/unknown.jpg"
+        : userData.profileImg
+  }
+  width="150"
+  height="150"
+  alt="Profile picture"
+/>
+
   <div className="profilepic__content">
   <ion-icon name="camera-outline"></ion-icon>
 
@@ -107,8 +124,8 @@ export default function Setting(){
                     <h4 className="text-right">Profile Settings</h4>
                 </div>
                 <div className="row mt-2">
-                    <p className="alert alert-danger" style={ErrorMessage.length > 0 ? { display: 'block' } : { display: 'none' }}>{ErrorMessage}</p>
-                    <p className="alert alert-success" style={validation.length > 0 ? { display: 'block' } : { display: 'none' }}>{validation}</p>
+                    <p className="alert errorAlert" style={ErrorMessage.length > 0 ? { display: 'block' } : { display: 'none' }} >{ErrorMessage}</p>
+                    <p className="alert alert-success successAlert" style={validation.length > 0 ? { display: 'block' } : { display: 'none' }}>{validation}</p>
                     <div className="col-md-6"><label className="labels">Name</label><input type="text" className="form-control" placeholder="first name" value={username} onChange={(e)=>{setUsername(e.target.value)}}/></div>
                     
                 </div>
@@ -124,7 +141,19 @@ export default function Setting(){
                     <div className="col-md-6"><label className="labels">Country</label><input type="text" className="form-control" placeholder="country" value="" onChange={()=>{}}/></div>
                     <div className="col-md-6"><label className="labels">State/Region</label><input type="text" className="form-control" value="" placeholder="state" onChange={()=>{}}/></div>
                 </div>
-                <div className="mt-5 text-center"><input className="btn btn-primary profile-button" type="submit" value="Save Profile" onChange={()=>{}}/></div>
+                {loading ? (
+                   <div className="mt-5 text-center">
+                    <button className="btn btn-primary profile-button" ><CircularProgress size="2rem"/> 
+                    </button></div>
+                ):(
+                  (currentPassword != "" && newPassword != "") || (showProfileImg != "")  ?(
+
+                    <div className="mt-5 text-center"><input className="btn btn-primary profile-button" type="submit" value="Save Profile" onChange={()=>{}}/></div>
+                  ):(
+                    
+                    <div className="mt-5 text-center"><input className="btn btn-primary profile-button profile-button-disable" type="submit" value="Save Profile" onChange={()=>{}} disabled/></div>
+                  )
+                )}
             </div>
         </div>
         <div className="col-md-4">

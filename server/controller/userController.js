@@ -2,6 +2,7 @@ const userSchema = require("../models/user");
 const notificationSchema = require("../models/notification");
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
+require("dotenv").config()
 const cloudinary = require('../config/cloudinary');
 
 const Add_InsertUser = async (req, res) => {
@@ -310,29 +311,56 @@ const postMarkes=  async (req,res) =>{
     }
 }
 
-const updateUser =  async (req, res) => {
-    const data = {
-        userId: req.params.id,
-        username: req.body.username,
-        newPassword: req.body.newPassword,
-        profileImg: `uploads/${req.file.filename}`
-    };
+
+const updateUser = async (req, res) => {
+    const { id } = req.params;
+    const { username, newPassword, currentPassword } = req.body;
+  
     try {
-        const userData = await userSchema.findById(data.userId);
-        if (!userData) {
-            return res.status(404).json({ message: 'User not found' });
+      const userData = await userSchema.findById(id);
+      if (!userData) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Handle password update
+      if (newPassword && currentPassword) {
+        const isMatch = await bcryptjs.compare(currentPassword, userData.password);
+        if (!isMatch) {
+          return res.status(400).json({ error: "Current password is incorrect" });
         }
-        userData.username = data.username;
-        userData.profileImg = data.profileImg;
-
-        userData.password = data.newPassword;
+        const hashedPassword = await bcryptjs.hash(newPassword, 10);
+        userData.password = hashedPassword;
+      }
+  
+      userData.username = username;
+  
+      // Handle image upload to Cloudinary
+      if (req.file) {
+        cloudinary.uploader.upload_stream(
+          { resource_type: 'image' },
+          async (error, uploadedFile) => {
+            if (error) {
+              return res.status(500).json({ error: 'Upload failed' });
+            }
+  
+            userData.profileImg = uploadedFile.secure_url;
+            await userData.save();
+  
+            userData.password = undefined; // Hide password in response
+            res.status(200).json(userData);
+          }
+        ).end(req.file.buffer);
+      } else {
         await userData.save();
-        res.json(userData);
+        userData.password = undefined; // Hide password in response
+        res.status(200).json(userData);
+      }
+  
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal Server Error' });
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
-}
-
+  };
+  
 
 module.exports = {Add_InsertUser,deletefriend,checkUser,postMarkes , updateUser , getUser , getAllUsers,getOneUser,addFriend,acceptfriend,rejectfriend }

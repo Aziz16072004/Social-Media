@@ -189,7 +189,7 @@ export default function Post(){
                     <div className="post-title">
                             <div className="profile-img img-post">
                               {console.log(post)}
-                                <img src={"/"+post.userId?.profileImg} alt=""/>
+                                <img src={"/"+post.userId?.profileImg || "/uploads/unknown.jpg"} alt=""/>
                             
                                 </div>
                             <div className="post-name-utilisateur">
@@ -230,7 +230,7 @@ export default function Post(){
                                 <div className="line1-vue">
                                   <div>
                                   {post.peopleRated.map((rater, index) => (
-                                      index < 3 ? <img src={rater.user?.profileImg} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
+                                      index < 3 ? <img src={rater.user?.profileImg || "/uploads/unknown.jpg"} alt="" className={`img${index+1}`} key={rater.user?._id} /> : ""
                                     ))}
               </div>
                                     <p onClick={()=>{fetchData(post._id) ;setShowRatings(true)}}>Like by <b>{post.peopleRated.length > 0 ? post.peopleRated[0].user?.username : ""}</b> and <b>{post.rates > 0 ? post.rates - 1 : 0} other</b></p>
@@ -251,7 +251,7 @@ export default function Post(){
               ratingData.peopleRated.map((rate) => (
                   <div className="personRateInformation" key={rate.user?._id}>
                 <div>
-                  <img src={rate.user?.profileImg} alt="" />
+                  <img src={rate.user?.profileImg || "/uploads/unknown.jpg"} alt="" />
                   <img src={loveColored} className="coloredHeartRate" alt="Love Colored" />
                 </div>
                 <p>{rate.user?.username}</p>
@@ -275,7 +275,7 @@ export default function Post(){
           ratingData.comments.map((com)=>(
               <div className="comment" key={com._id}>
               
-                  <img src={com.user?.profileImg} alt=""/>
+                  <img src={com.user?.profileImg || "/uploads/unknown.jpg"} alt=""/>
                   <div className="comment_description">
                     <p className="comment_title"><b>{com.user?.username}</b></p>
                     <p className="comment_writing"> {com.comment}</p>
@@ -300,7 +300,7 @@ export default function Post(){
               {post.comments.length>0 ?
                 <div className="comment">
                   
-                  <img src={post.comments[0].user?.profileImg} alt=""/>
+                  <img src={post.comments[0].user?.profileImg || "/uploads/unknown.jpg"} alt=""/>
                   <div className="comment_description">
                     <p className="comment_title"><b>{post.comments[0].user?.username}</b></p>
                     <p className="comment_writing"> {post.comments[0].comment}</p>
