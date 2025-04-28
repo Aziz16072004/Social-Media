@@ -64,6 +64,7 @@ const rejectFriend = async (req)=>{
         setOptionSelected(item);
         try {
             if (item === "delete") {
+                
                 await axios.delete("/posts/deletePost", { data: { postId: selectedItem._id } });
                 setPosts((prevPosts) => prevPosts.filter((post) => post._id !== selectedItem._id));
               }

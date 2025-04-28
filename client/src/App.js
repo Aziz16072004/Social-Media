@@ -77,7 +77,7 @@ function App() {
               <div class="theme_bar col-11 col-md-9 col-lg-7 mx-auto">
                 <ion-icon name="close-outline" onClick={(e) => {setShowTheme(false)}}></ion-icon>
       
-                  <div class="theme-info">
+                  <div className="theme-info">
                       <h2>Cstomize your view</h2>
                       <p>manage your font size , color , and background</p>
                   </div>

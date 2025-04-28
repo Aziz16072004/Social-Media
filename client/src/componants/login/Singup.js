@@ -108,7 +108,7 @@ function Signup() {
                     style={{ display: 'none' }} 
                   />
                   <img 
-                    src={showProfileImg || "/uploads/Unknown.jpg"} 
+                    src={showProfileImg || ("/uploads/Unknown.jpg" ?"/uploads/Unknown.jpg" : "https://social-media-xd1j.onrender.com/uploads/Unknown.jpg" )} 
                     alt="profileImg" 
                     style={{ width: '150px', height: '150px', borderRadius: '50%' }} 
                   />
