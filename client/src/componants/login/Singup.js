@@ -14,7 +14,7 @@ function Signup() {
   const { register, handleSubmit, setError, formState: { errors } } = useForm();
   const fileInputRef = useRef(null);
   const [useIsValid , setUseIsValid]= useState(false)
-  const [profileImg, setProfileImg] = useState("/uploads/Unknown.jpg");
+  const [profileImg, setProfileImg] = useState("/uploads/unknown.jpg");
   const [showProfileImg, setShowProfileImg] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -29,7 +29,7 @@ function Signup() {
         formData.append("image", profileImg); // Append the selected image file
       }
       else{
-        formData.append("image", "/uploads/Unknown.jpg")
+        formData.append("image", "/uploads/unknown.jpg")
       }
 
       const res = await axios.post("/auth/signup", formData, { 
@@ -108,7 +108,7 @@ function Signup() {
                     style={{ display: 'none' }} 
                   />
                   <img 
-                    src={showProfileImg || ("/uploads/Unknown.jpg" ?"/uploads/Unknown.jpg" : "https://social-media-xd1j.onrender.com/uploads/Unknown.jpg" )} 
+                    src={showProfileImg || "/uploads/unknown.jpg"} 
                     alt="profileImg" 
                     style={{ width: '150px', height: '150px', borderRadius: '50%' }} 
                   />

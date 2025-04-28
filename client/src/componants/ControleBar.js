@@ -155,7 +155,7 @@ export default function ControleBar({socket , updateSetShowTheme}) {
                 <Link to={`/profile/${data._id}`}  className="profile-bar" >
                     <div className="profile-bar-content"  >
                         <div className="profile-img">
-                            <img src={data.profileImg || "/uploads/Unknown.jpg"} alt=""/>
+                            <img src={data.profileImg || "/uploads/unknown.jpg"} alt=""/>
                         </div>
                         <div className="info">
                             <b id="name-of-profile">{data.username}</b> <br/>
